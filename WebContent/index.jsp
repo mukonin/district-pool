@@ -16,6 +16,7 @@
  
 <h3><a href = "../hospital">  Hospital</a></h3>
 
+
 <table border="1" cellpadding="1" cellspacing="1" style="width:500px">
 	<tbody>
 		<tr>
@@ -24,6 +25,7 @@
                                   <p><input name="get" type="submit" value="Doctors" /></p>
                                   <p><input name="get" type="submit" value="Patients" /></p>
                                   <p><input name="get" type="submit" value="Users" /></p>
+                                  <p><input name="add" type="submit" value="New" /></p>
                 </form>
             </td>
 			<td>
