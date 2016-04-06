@@ -188,6 +188,29 @@ public class DAO {
                 person.setDate(new DateTime(resultSet.getDate("date").getTime()));
                 list.add(person);
             }
+            resultSet.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return list;
+    }
+    
+    public static ArrayList<Person> getPersons() {
+        ArrayList<Person> list = new ArrayList<>();
+        try {
+            Statement statement = connectToDB();
+            String sql = "SELECT * FROM users;";
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next())
+            {
+                Person person = new Person();
+                person.setId(resultSet.getLong("id"));
+                person.setFirstName(resultSet.getString("firstname"));
+                person.setLastName(resultSet.getString("lastname"));
+                person.setDate(new DateTime(resultSet.getDate("date").getTime()));
+                list.add(person);
+            }
+            resultSet.close();
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
@@ -209,6 +232,7 @@ public class DAO {
                 person.setDate(new DateTime(resultSet.getDate("date").getTime()));
                 list.add(person);
             }
+            resultSet.close();
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
@@ -231,6 +255,7 @@ public class DAO {
                 person.setDate(new DateTime(resultSet.getDate("date").getTime()));
                 list.add(person);
             }
+            resultSet.close();
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }

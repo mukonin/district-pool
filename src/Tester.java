@@ -53,7 +53,7 @@ public class Tester {
 
 
 
-        //System.out.println("----------------------------------------------");
+        System.out.println("----------------------------------------------");
         //System.out.println(hospital);
 
     }
