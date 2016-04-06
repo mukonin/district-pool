@@ -1,0 +1,7 @@
+Beam Jim (25.11.1960) {Taylor Dick (12.11.1967)},
+Daniels Jack (12.10.1972) {Harrison George (15.12.1964), Jagger Mick (18.02.1966), Starr Ringo (25.03.1964)},
+Dickel George (06.07.1965) {Plant Robert (23.03.1966)},
+Drum Johny (05.06.1962) {},
+Jameson John (02.03.1970) {Lennon John (03.04.1980), Steve Vai (05.07.1981)},
+Walker Johnnie (02.08.1973) {Sinatra Frank (13.11.1980)},
+Williams Evan (12.12.1961) {Jones Kenny (15.09.1975), Taylor Keith (08.03.1970)}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hospital>
+    <doctor>
+        <doctor id="73461">
+            <lastName>Blacksmith</lastName>
+            <firstName>Ann</firstName>
+            <date>12.10.1972</date>
+        </doctor>
+    </doctor>
+    <doctor>
+        <doctor id="24324">
+            <lastName>Jobs</lastName>
+            <firstName>Steven</firstName>
+            <date>02.08.1973</date>
+        </doctor>
+        <patient id="34432">
+            <lastName>Sinatra</lastName>
+            <firstName>Frank</firstName>
+            <date>03.11.1972</date>
+        </patient>
+    </doctor>
+    <doctor>
+        <doctor id="64836">
+            <lastName>Smith</lastName>
+            <firstName>John</firstName>
+            <date>02.03.1970</date>
+        </doctor>
+        <patient id="14392">
+            <lastName>Lennon</lastName>
+            <firstName>John</firstName>
+            <date>03.04.1980</date>
+        </patient>
+        <patient id="62503">
+            <lastName>Steve</lastName>
+            <firstName>Vai</firstName>
+            <date>05.07.1981</date>
+        </patient>
+    </doctor>
+</hospital>

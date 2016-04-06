@@ -1,0 +1,42 @@
+{
+  "doctors" : [ {
+    "doctor" : {
+      "id" : 73461,
+      "lastName" : "Blacksmith",
+      "firstName" : "Ann",
+      "date" : "12.10.1972"
+    },
+    "patients" : [ ]
+  }, {
+    "doctor" : {
+      "id" : 24324,
+      "lastName" : "Jobs",
+      "firstName" : "Steven",
+      "date" : "02.08.1973"
+    },
+    "patients" : [ {
+      "id" : 34432,
+      "lastName" : "Sinatra",
+      "firstName" : "Frank",
+      "date" : "03.11.1972"
+    } ]
+  }, {
+    "doctor" : {
+      "id" : 64836,
+      "lastName" : "Smith",
+      "firstName" : "John",
+      "date" : "02.03.1970"
+    },
+    "patients" : [ {
+      "id" : 14392,
+      "lastName" : "Lennon",
+      "firstName" : "John",
+      "date" : "03.04.1980"
+    }, {
+      "id" : 62503,
+      "lastName" : "Steve",
+      "firstName" : "Vai",
+      "date" : "05.07.1981"
+    } ]
+  } ]
+}

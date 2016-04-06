@@ -1,0 +1,3 @@
+lacksmith Ann (99.10.1972) {},
+Jobs Steven (02.08.1973) {Sinatra Frank (03.11.1972)},
+Smith John (02.03.1970) {Lennon John (03.04.1980), Steve Vai (05.07.1981)}
