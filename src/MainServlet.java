@@ -1,7 +1,6 @@
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -11,7 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.joda.time.DateTime;
+
 import entities.Person;
+import utils.PersonIOException;
+import utils.PersonUtils;
 
 /**
  * Servlet implementation class MainServlet
@@ -32,46 +35,80 @@ public class MainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				
-		String req = request.getParameter("get");
-		
-		
-		
-		
-		ArrayList<Person> result = new ArrayList<>();
+		String action = request.getParameter("action");
 
-		if (req.equals("Doctors")) result = dao.DAO.getDoctors();
-		if (req.equals("Patients")) result = dao.DAO.getPatients();
-		if (req.equals("Users")) result = dao.DAO.getPersons();
+		ArrayList<Person> list;
+		Person person;
 		
-		
-
-		request.setAttribute("1", result);
-		request.getRequestDispatcher("index.jsp").forward(request, response);
-		
-		
+		switch (action) {
+		case "Users" : list = dao.DAO.getPersons();
+			request.setAttribute("page", "Users");
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("users.jsp").forward(request, response);
+			break;
+		case "Doctors" : list = dao.DAO.getDoctors();
+			request.setAttribute("page", "Doctors");
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("users.jsp").forward(request, response);
+			break;
+		case "Patients" : list = dao.DAO.getPatients();
+			request.setAttribute("page", "Patients");
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("users.jsp").forward(request, response);
+			break;
+		case "New" : 
+			request.getRequestDispatcher("adduser.jsp").forward(request, response);
+			break;
+		case "Add User" : person = new Person();
+			person.setFirstName(request.getParameter("fname"));
+			person.setLastName(request.getParameter("lname"));
+			person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
+			switch (request.getParameter("role")) {
+			case "doc" : dao.DAO.addDoctor(person);
+				break;
+			case "pat" : dao.DAO.addPatient(person);
+				break;
+			};
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			break;
+		case "user" : person = dao.DAO.getById(Long.parseLong(request.getParameter("id")));
+			request.setAttribute("person", person);
+			request.setAttribute("role", dao.DAO.getRole(person));
+			list = dao.DAO.getPatients(person);
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("user.jsp").forward(request, response);
+		}
 		
 		
 		
 		
 		/*
 		
-        PrintWriter out = response.getWriter();
-        
-        out.println (
-                  "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" +" +
-                      "http://www.w3.org/TR/html4/loose.dtd\">\n" +
-                  "<html> \n" +
-                    "<head> \n" +
-                      "<meta http-equiv=\"Content-Type\" content=\"text/html; " +
-                        "charset=ISO-8859-1\"> \n" +
-                      "<title> Example  </title> \n" +
-                    "</head> \n" +
-                    "<body> <div align='center'> \n" +
-                      "<style= \"font-size=\"12px\" color='black'\"" + "\">" +
-                      "Result: " + result + " <br> " +
-                    "</font></body> \n" +
-                  "</html>" 
-                );    */
+		if (action.equals("user")) {
+			Person person = dao.DAO.getById(Long.parseLong(request.getParameter("id")));
+			request.setAttribute("user", true);	
+			request.setAttribute("person", person);
+			if (dao.DAO.isDoctor(person)) {
+				//ArrayList<Person> list = dao.DAO.getPatients(person);
+				request.setAttribute("patientslist", true);	
+				//request.setAttribute("list", list);
+			} else {
+				request.setAttribute("doctorslist", true);
+				Person doctor = dao.DAO.getDoctor(person);
+				request.setAttribute("doctor", doctor);
+			}
+		}
+		
+		
+
+		request.getRequestDispatcher("index.jsp").forward(request, response);
+		
+		
+		
+		*/
+		
+		
+	
 	}
 
 	/**

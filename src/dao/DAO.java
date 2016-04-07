@@ -167,6 +167,7 @@ public class DAO {
                 person.setDate(new DateTime(resultSet.getDate("date").getTime()));
                 list.add(person);
             }
+            resultSet.close();
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
@@ -193,6 +194,27 @@ public class DAO {
             e.printStackTrace(System.out);
         }
         return list;
+    }
+    
+    public static Person getDoctor(Person patient) {
+        try {
+            Statement statement = connectToDB();
+            String sql = "SELECT * FROM binds JOIN users ON binds.doctor_id = users.id WHERE binds.patient_id = '" + patient.getId() + "';";
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next())
+            {
+                Person person = new Person();
+                person.setId(resultSet.getLong("id"));
+                person.setFirstName(resultSet.getString("firstname"));
+                person.setLastName(resultSet.getString("lastname"));
+                person.setDate(new DateTime(resultSet.getDate("date").getTime()));
+                return person;
+            }
+            resultSet.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return new Person();
     }
     
     public static ArrayList<Person> getPersons() {
@@ -261,4 +283,53 @@ public class DAO {
         }
         return list;
     }
+
+    public static Person getById(Long id) {
+        Person person = new Person();
+        try {
+            String sql = "SELECT * FROM users WHERE (id = '" + id + "');";
+            Statement statement = connectToDB();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next())
+            {
+                person.setId(resultSet.getLong("id"));
+                person.setFirstName(resultSet.getString("firstname"));
+                person.setLastName(resultSet.getString("lastname"));
+                person.setDate(new DateTime(resultSet.getDate("date").getTime()));
+            }
+            resultSet.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return person;
+    }
+    
+    public static boolean isDoctor(Person person) {
+    	 try {
+             String sql = "SELECT * FROM roles WHERE (id = '" + person.getId() + "');";
+             Statement statement = connectToDB();
+             ResultSet resultSet = statement.executeQuery(sql);
+             while (resultSet.next())
+             {
+            	 if (resultSet.getString("role").equals("doctor")) return true;
+             }
+             resultSet.close();
+         } catch (Exception e) {
+             e.printStackTrace(System.out);
+         }
+    	 return false;
+    }
+    
+    public static String getRole (Person person) {
+    	try {
+            String sql = "SELECT * FROM roles WHERE (id = '" + person.getId() + "');";
+            Statement statement = connectToDB();
+            ResultSet resultSet = statement.executeQuery(sql);
+            return resultSet.getString("role");
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+   	 return "user";
+    }
+    
 }

@@ -29,6 +29,11 @@ dependencies {
     compile 'org.eclipse.jetty:jetty-servlet:9.3.9.M0'
     compile 'org.eclipse.jetty:jetty-servlets:9.3.9.M0'
     compile 'org.eclipse.jetty:jetty-jsp-2.1:7.5.4.v20111024'
+    compile 'javax.servlet:jstl:1.2'
+    compile 'taglibs:standard:1.1.2'
+    compile 'joda-time:joda-time-jsptags:1.1.1'
+    
+    
     
     
 }
