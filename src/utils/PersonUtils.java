@@ -18,14 +18,12 @@ public abstract class PersonUtils {
     public static final String personNameRexExp = "[A-Z][a-z]+";
     public static final String dateRexExp = "\\(\\d{2}.\\d{2}.\\d{4}\\)";
     public static final String dateFormatString = "dd.MM.yyyy";
+    public static final Pattern patternName = Pattern.compile(personNameRexExp);
+    public static final Pattern patternDate = Pattern.compile(dateRexExp);
 
     public static Person valueOf(String personString) throws PersonIOException {
 
         DateTime date = new DateTime(0L);
-
-        Pattern patternName = Pattern.compile(personNameRexExp);
-
-        Pattern patternDate = Pattern.compile(dateRexExp);
 
         String errorMsg[] = new String[4];
 
@@ -85,5 +83,18 @@ public abstract class PersonUtils {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(dateFormatString);
         return formatter.parseDateTime(dateString);
     }
+    
+    public static boolean validateName(String name) {	
+    	return patternName.matcher(name).matches();
+    }
 
+    public static boolean validateDateString(String date) {	
+    	try {
+            DateTime dateTime = getDateFromString(date.replaceAll("[()]", ""));
+            if (dateTime.isAfter(new DateTime())) return false;
+            return true;
+        } catch (IllegalArgumentException e) {
+        	return false;
+        }
+    }
 }

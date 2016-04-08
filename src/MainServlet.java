@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,6 +40,7 @@ public class MainServlet extends HttpServlet {
 
 		ArrayList<Person> list;
 		Person person;
+		String message = "";
 		
 		switch (action) {
 		case "Users" : list = dao.DAO.getPersons();
@@ -56,19 +58,30 @@ public class MainServlet extends HttpServlet {
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("users.jsp").forward(request, response);
 			break;
-		case "New" : 
+		case "New" : request.setAttribute("page", "Add New User");
 			request.getRequestDispatcher("adduser.jsp").forward(request, response);
 			break;
 		case "Add User" : person = new Person();
-			person.setFirstName(request.getParameter("fname"));
-			person.setLastName(request.getParameter("lname"));
-			person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
-			switch (request.getParameter("role")) {
-			case "doc" : dao.DAO.addDoctor(person);
-				break;
-			case "pat" : dao.DAO.addPatient(person);
-				break;
-			};
+			if (PersonUtils.validateName(request.getParameter("fname")) &&
+					PersonUtils.validateName(request.getParameter("lname")) &&
+					PersonUtils.validateDateString(request.getParameter("date"))) {
+				person.setFirstName(request.getParameter("fname"));
+				person.setLastName(request.getParameter("lname"));
+				person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
+		        Random random = new Random();
+		        person.setId((long) (random.nextDouble() * 9000000000L) + 1000000000L);
+				switch (request.getParameter("role")) {
+				case "doc" : dao.DAO.addDoctor(person);
+					break;
+				case "pat" : dao.DAO.addPatient(person);
+					break;
+				};
+				message = "Added to DB";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("index.jsp").forward(request, response);
+			}			
+			message = "Error adding to DB (not added)";
+			request.setAttribute("message", message);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
 		case "user" : person = dao.DAO.getById(Long.parseLong(request.getParameter("id")));
@@ -76,39 +89,30 @@ public class MainServlet extends HttpServlet {
 			request.setAttribute("role", dao.DAO.getRole(person));
 			list = dao.DAO.getPatients(person);
 			request.setAttribute("list", list);
+			request.setAttribute("id", person.getId());
+			request.setAttribute("date", PersonUtils.getStringFromDate(person.getDate()));
+			request.setAttribute("page", "User Information");			
 			request.getRequestDispatcher("user.jsp").forward(request, response);
-		}
-		
-		
-		
-		
-		/*
-		
-		if (action.equals("user")) {
-			Person person = dao.DAO.getById(Long.parseLong(request.getParameter("id")));
-			request.setAttribute("user", true);	
-			request.setAttribute("person", person);
-			if (dao.DAO.isDoctor(person)) {
-				//ArrayList<Person> list = dao.DAO.getPatients(person);
-				request.setAttribute("patientslist", true);	
-				//request.setAttribute("list", list);
-			} else {
-				request.setAttribute("doctorslist", true);
-				Person doctor = dao.DAO.getDoctor(person);
-				request.setAttribute("doctor", doctor);
-			}
-		}
-		
-		
-
-		request.getRequestDispatcher("index.jsp").forward(request, response);
-		
-		
-		
-		*/
-		
-		
-	
+			break;
+		case "Update User" : person = new Person();
+		if (PersonUtils.validateName(request.getParameter("fname")) &&
+				PersonUtils.validateName(request.getParameter("lname")) &&
+				PersonUtils.validateDateString(request.getParameter("date"))) {
+			person.setFirstName(request.getParameter("fname"));
+			person.setLastName(request.getParameter("lname"));
+			person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
+	        person.setId(Long.parseLong(request.getParameter("id")));
+	        dao.DAO.updateUser(person);
+			message = "Information Updated";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			}			
+			message = "Error Updating (not updated)";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			break;
+		default : request.getRequestDispatcher("index.jsp").forward(request, response);
+		}	
 	}
 
 	/**

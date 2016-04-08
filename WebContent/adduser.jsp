@@ -50,10 +50,11 @@
     </tr>
     <tr>
     	<td>Role</td>
-    	<td><select size="2" name="role">
+    	<td><select name="role">   
 			<option value="doc">Doctor</option>
 			<option selected value="pat">Patient</option>
-			</select></td>
+			</select>
+		</td>
     </tr>
 </table>
 <br>

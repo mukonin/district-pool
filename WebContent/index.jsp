@@ -25,50 +25,9 @@
 		<input name="action" type="submit" value="New" />
 	</form>
 	<br>
-	
-<table border="1" cellpadding="1" cellspacing="1" style="width:500px">
-	<tbody>
-		<tr>
-			<td>
-				<form action="MainServlet">
-                	<p><input name="action" type="submit" value="Doctors" /></p>
-                    <p><input name="action" type="submit" value="Patients" /></p>
-                    <p><input name="action" type="submit" value="Users" /></p>
-                    <p><input name="action" type="submit" value="New" /></p>
-                </form>
-            </td>
-			<td>
-			
-						
-				<c:if test="${added == true}">
-					Added to DB
-				</c:if>
-				
-				<c:if test="${user == true}">
-					<c:out value="${person}"/><p>
-					<c:if test="${patientslist == true}">
-						Patients:<p>
-						<c:forEach var="user" items="${list}">
-   							<a href = "http://localhost:8080/hospital/MainServlet?action=user&id=${user.id}"><c:out value="${user}"/> </a><p>
-						</c:forEach>
-					</c:if>					
-					<c:if test="${doctorslist == true}">
-						Doctor:<p>
-   						<a href = "http://localhost:8080/hospital/MainServlet?action=user&id=${doctor.id}"><c:out value="${doctor}"/> </a><p>
-					</c:if>
-				</c:if>
-				
-				
-				
-				
-				
-			
-			
-				
-			</td>
-		</tr>
-	</tbody>
-</table>
+
+${message }
+
  
 </body>
 </html>
