@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @ author Mukonin Oleksandr
@@ -65,8 +66,16 @@ public class DAO {
     public static void addUser(Person person) {
         try {
             Statement statement = connectToDB();
-
-            String sql = "INSERT INTO users (id, firstname, lastname, date) VALUES ('" + person.getId() +
+        	Random random = new Random();
+            String sql = "SELECT * FROM users WHERE id = '"+ person.getId() +"';";
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+            	resultSet.close();
+		        person.setId((long) (random.nextDouble() * 9000000000L) + 1000000000L);
+            	sql = "SELECT * FROM users WHERE id = '"+ person.getId() +"';";
+                resultSet = statement.executeQuery(sql);
+            }
+            sql = "INSERT INTO users (id, firstname, lastname, date) VALUES ('" + person.getId() +
                     "','" + person.getFirstName() + "','" +
                     person.getLastName() + "','" +
                     person.getDate().toString("yyyy-MM-dd hh:mm:ss") + "');";
@@ -214,7 +223,7 @@ public class DAO {
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
-        return new Person();
+        return null;
     }
     
     public static ArrayList<Person> getPersons() {

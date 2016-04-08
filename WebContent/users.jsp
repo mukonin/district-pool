@@ -48,5 +48,8 @@
     </c:forEach>
 </table>
 
+	
+	<%@include file="index.jsp" %>
+
 </body>
 </html>

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
 
+import entities.Hospital;
 import entities.Person;
 import utils.PersonIOException;
 import utils.PersonUtils;
@@ -85,10 +86,13 @@ public class MainServlet extends HttpServlet {
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
 		case "user" : person = dao.DAO.getById(Long.parseLong(request.getParameter("id")));
-			request.setAttribute("person", person);
+			request.setAttribute("person", person);	
+			request.setAttribute("doctor", dao.DAO.getDoctor(person));
 			request.setAttribute("role", dao.DAO.getRole(person));
 			list = dao.DAO.getPatients(person);
 			request.setAttribute("list", list);
+			ArrayList<Person> list2 = dao.DAO.getDoctors();
+			request.setAttribute("list2", list2);
 			request.setAttribute("id", person.getId());
 			request.setAttribute("date", PersonUtils.getStringFromDate(person.getDate()));
 			request.setAttribute("page", "User Information");			
@@ -108,6 +112,31 @@ public class MainServlet extends HttpServlet {
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			}			
 			message = "Error Updating (not updated)";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			break;
+		case "Delete User" : person = dao.DAO.getById(Long.parseLong(request.getParameter("id")));
+			dao.DAO.deleteUser(person);
+			message = "User deleted";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			break;
+		case "bind" : Person doctor = dao.DAO.getById(Long.parseLong(request.getParameter("id1")));
+			Person patient = dao.DAO.getById(Long.parseLong(request.getParameter("id2")));
+			dao.DAO.linkDoctorPatient(doctor, patient);
+			message = "Linked";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			break;
+		case "r" : io.TXT r = new io.TXT();
+			Hospital hospital = r.readHospital("d:/workspace/hospital/hospital.txt");			
+			dao.DAO.dropDB();
+			dao.DAO.createDB();
+			try {
+				io.SQL.writeHospital(hospital);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}message = "DB resetted";
 			request.setAttribute("message", message);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;

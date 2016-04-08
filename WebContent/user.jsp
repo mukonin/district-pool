@@ -66,7 +66,7 @@
     </tr>    
 </table>
 <br>
-<input name="action" type="submit" value="Update User">
+<input name="action" type="submit" value="Update User"><input name="action" type="submit" value="Delete User">
 </form>
 
 <c:if test="${role == 'doctor'}">
@@ -94,9 +94,38 @@
 </table>
 </c:if>
 	
-	
-	
-	
+<c:if test="${role == 'patient'}">
+	<c:if test="${not empty doctor}">
+		Doctor: <a href = "http://localhost:8080/hospital/MainServlet?action=user&id=${doctor.id}"> ${doctor }</a>
+	</c:if>
+	<c:if test="${empty doctor}">
+		Select doctor: <br>
+		<input type = "hidden" name = "id" value = "${person.id}"/>
+<table border="1" cellpadding="1" cellspacing="1">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date Of Birth</th>
+    </tr>
+	<c:forEach var="user" items="${list2}">
+    <tr onclick="document.location = 'http://localhost:8080/hospital/MainServlet?action=bind&id1=${user.id}&id2=${person.id}';">
+        <td>
+            <c:out value="${user.firstName}"/>
+        </td>
+        <td>
+            <c:out value="${user.lastName}"/>
+        </td>
+        <td>
+        	<joda:format pattern="dd.MM.yyyy" value="${user.date}"/>
+        </td>
+    </tr>
+    </c:forEach>
+</table>
+	</c:if>
+</c:if>
+
+
+
 	
 	
 
