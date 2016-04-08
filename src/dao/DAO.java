@@ -325,6 +325,7 @@ public class DAO {
             String sql = "SELECT * FROM roles WHERE (id = '" + person.getId() + "');";
             Statement statement = connectToDB();
             ResultSet resultSet = statement.executeQuery(sql);
+            resultSet.next();
             return resultSet.getString("role");
         } catch (Exception e) {
             e.printStackTrace(System.out);
