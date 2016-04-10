@@ -3,84 +3,60 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
-${role} : <a href = "../hospital">${person }</a><br>
-
-<form action="http://localhost:8080/hospital/MainServlet?action&fname&lname&date&id&role">
 <table>
     <tr>
-    	<td>First name:</td>
-    	<td><input type="text" name="fname" value="${person.firstName }"></td>
+		<td>User role:</td>
+		<td>${role}</td>
     </tr>
     <tr>
-    	<td>Last name:</td>
-    	<td><input type="text" name="lname" value="${person.lastName }"></td>
+		<td>First name:</td>
+		<td>${user.firstName }</td>
     </tr>
     <tr>
-    	<td>Birth date:</td>
-        	<joda:format pattern="dd.MM.yyyy" value="${user.date}"/>
-    	<td><input type="text" name="date" id="datepicker" value = "${date}"/></td>
-    </tr>  
+		<td>Last name:</td>
+		<td>${user.lastName }</td>
+    </tr>
     <tr>
-    	<td>ID:</td>
-    	<td>${id}<input type = "hidden" name = "id" value = "${id}"/></td>
-    </tr>    
+		<td>Birth date:</td>
+		<td><joda:format pattern="dd.MM.yyyy" value="${user.date}"/></td>
+    </tr>
+    <tr>
+		<td></td>
+		<td></td>
+    </tr>
 </table>
-<br>
-<input name="action" type="submit" value="Update User"><input name="action" type="submit" value="Delete User">
+
+<hr>
+<form action="http://localhost:8080/hospital/EditServlet?action&id=${user.id}">
+	<button type="submit" value="edit" name="action">Edit</button>
+	<button type="submit" value="delete" name="action" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+	<input type = "hidden" name = "id" value = "${user.id}"/>
 </form>
-
-
-<c:if test="${role == 'doctor'}">
-		Patients:
-		<br>
-<table border="1" cellpadding="1" cellspacing="1">
-    <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Date Of Birth</th>
-    </tr>
-	<c:forEach var="user" items="${list}">
-    <tr onclick="document.location = 'http://localhost:8080/hospital/MainServlet?action=user&id=${user.id}';">
-        <td>
-            <c:out value="${user.firstName}"/>
-        </td>
-        <td>
-            <c:out value="${user.lastName}"/>
-        </td>
-        <td>
-        	<joda:format pattern="dd.MM.yyyy" value="${user.date}"/>
-        </td>
-    </tr>
-    </c:forEach>
-</table>
-</c:if>
 	
-<c:if test="${role == 'patient'}">
-	<c:if test="${not empty doctor}">
-		Doctor: <a href = "http://localhost:8080/hospital/MainServlet?action=user&id=${doctor.id}"> ${doctor }</a>
-	</c:if>
-	<c:if test="${empty doctor}">
-		Select doctor: <br>
-		<input type = "hidden" name = "id" value = "${person.id}"/>
-<table border="1" cellpadding="1" cellspacing="1">
+<c:if test="${not empty doctor}">
+	<hr>
+	Doctor: <a href = "http://localhost:8080/hospital/UserServlet?id=${doctor.id}"> ${doctor }</a>
+</c:if>
+
+<c:if test="${not empty list}">
+<hr>
+<table>
     <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Date Of Birth</th>
-    </tr>
-	<c:forEach var="user" items="${list2}">
-    <tr onclick="document.location = 'http://localhost:8080/hospital/MainServlet?action=bind&id1=${user.id}&id2=${person.id}';">
-        <td>
-            <c:out value="${user.firstName}"/>
-        </td>
-        <td>
-            <c:out value="${user.lastName}"/>
-        </td>
-        <td>
-        	<joda:format pattern="dd.MM.yyyy" value="${user.date}"/>
-        </td>
+        <th>Patients (clickable)</th>
+	</tr>
+	<c:forEach var="user" items="${list}">
+	<tr>
+		<td onclick="document.location = 'http://localhost:8080/hospital/UserServlet?id=${user.id}';">
+			<c:out value="${user}"/>
+		</td>
+		<td>
+        	<form action="http://localhost:8080/hospital/EditServlet?action&id=${user.id}">
+        		<button type="submit" value="edit" name="action">Edit</button>
+        		<button type="submit" value="delete" name="action" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+        		<input type = "hidden" name = "id" value = "${user.id}"/>
+        	</form>
+		</td>
     </tr>
     </c:forEach>
 </table>
-	</c:if>
 </c:if>

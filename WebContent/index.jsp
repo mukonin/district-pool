@@ -9,7 +9,7 @@
 </head>
 	<body>
 		<div id="header">
-			Hospital
+			Hospital ${pagename}
 		</div>
 		<div id="menu">
 			<a href = "../hospital">Main Page</a>
@@ -17,8 +17,12 @@
 			<a href = "http://localhost:8080/hospital/UsersServlet?action=patients">Patients</a><br>
 			<a href = "http://localhost:8080/hospital/UsersServlet?action=users">Users</a><br>
 			<hr>
+			<a href = "http://localhost:8080/hospital/EditServlet?action=new">New User</a><br>
+			<hr>
+			<a href = "" onclick="window.history.back();">Back</a>
 		</div>
 		<div id="content">
+			${message}			
 			<c:if test="${showcontent == true}">
 				<jsp:include page="${contentpage}" />		
 			</c:if>

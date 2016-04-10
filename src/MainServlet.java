@@ -36,9 +36,11 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-		String action = request.getParameter("action");
+		
 
+		
+		String action = request.getParameter("action");
+		
 		ArrayList<Person> list;
 		Person person;
 		String message = "";
