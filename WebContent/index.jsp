@@ -17,7 +17,7 @@
 			<a href = "http://localhost:8080/hospital/UsersServlet?action=patients">Patients</a><br>
 			<a href = "http://localhost:8080/hospital/UsersServlet?action=users">Users</a><br>
 			<hr>
-			<a href = "http://localhost:8080/hospital/EditServlet?action=new">New User</a><br>
+			<a href = "http://localhost:8080/hospital/EditServlet?action=new">Add User</a><br>
 			<hr>
 			<a href = "" onclick="window.history.back();">Back</a>
 		</div>
