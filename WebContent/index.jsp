@@ -13,9 +13,9 @@
 		</div>
 		<div id="menu">
 			<a href = "../hospital">Main Page</a>
-			<a href = "http://localhost:8080/hospital/UserServlet?action=doctors">Doctors</a><br>
-			<a href = "http://localhost:8080/hospital/UserServlet?action=patients">Patients</a><br>
-			<a href = "http://localhost:8080/hospital/UserServlet?action=users">Users</a><br>
+			<a href = "http://localhost:8080/hospital/UsersServlet?action=doctors">Doctors</a><br>
+			<a href = "http://localhost:8080/hospital/UsersServlet?action=patients">Patients</a><br>
+			<a href = "http://localhost:8080/hospital/UsersServlet?action=users">Users</a><br>
 			<hr>
 		</div>
 		<div id="content">

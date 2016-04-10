@@ -9,16 +9,21 @@
         <th>Date Of Birth</th>
     </tr>
 	<c:forEach var="user" items="${list}">
-    <tr onclick="document.location = 'http://localhost:8080/hospital/MainServlet?action=user&id=${user.id}';">
-        <td>
+    <tr>
+        <td onclick="document.location = 'http://localhost:8080/hospital/UserServlet?id=${user.id}';">
             <c:out value="${user.firstName}"/>
         </td>
-        <td>
+        <td onclick="document.location = 'http://localhost:8080/hospital/UserServlet?id=${user.id}';">
             <c:out value="${user.lastName}"/>
         </td>
-        <td>
+        <td onclick="document.location = 'http://localhost:8080/hospital/UserServlet?id=${user.id}';">
         	<joda:format pattern="dd.MM.yyyy" value="${user.date}"/>
         </td>
+        <td>
+        	<a href="http://localhost:8080/hospital/EditServlet?action=delete&id=${user.id}" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+        	<a href="http://localhost:8080/hospital/EditServlet?action=edit&id=${user.id}">Edit</a>
+        	<input type = "hidden" name = "id" value = "${user.id}"/>
+		</td>
     </tr>
     </c:forEach>
 </table>
