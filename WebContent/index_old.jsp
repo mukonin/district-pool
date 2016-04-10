@@ -25,6 +25,8 @@
 		<input name="action" type="submit" value="New" />
 	</form>
 	<br>
+	
+	<jsp:include page="users.jsp" />
 
 ${message }
  
