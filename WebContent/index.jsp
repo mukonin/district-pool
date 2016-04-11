@@ -12,17 +12,25 @@
 		<title>Hospital</title>
 	</head>
 	<body>
-		<div id="header">
+	
+	<div class="wrapper">
+		<div class="header">
 			<button class="button" onclick="window.location.href='../hospital'">Main</button>
 			<button class="button" onclick="window.location.href='http://localhost:8080/hospital/UsersServlet?action=users'">Users</button>
 		</div>
-		<div id="content">
+		<div class="main">
 			<c:if test="${not empty contentpage}">
 				<jsp:include page="${contentpage}" />		
 			</c:if>
+			
+			<hr>
+			<button class="button" onclick="window.location.href='../hospital'">Add New User</button>
+			
 		</div>
-		<div id="footer">
+		<div class="footer">
 			SoftServeInc 2016 Ch-039.Java
 		</div>
+	</div>
+	
 	</body>
 </html>

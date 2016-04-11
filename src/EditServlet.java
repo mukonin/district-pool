@@ -39,13 +39,23 @@ public class EditServlet extends HttpServlet {
 		Person doctor;
 		Person person;
 		Long id;
+		String role;
 		
 		switch (action) {
 		case "delete" : id = Long.parseLong(request.getParameter("id"));
 			person = dao.DAO.getById(id);
 			request.setAttribute("user", person);
+			role = dao.DAO.getRole(person);
 			dao.DAO.deleteUser(person);
-			request.setAttribute("message", "User " + person + " deleted"); 
+			switch (role) {
+			case "doctor" : list = dao.DAO.getDoctors();
+				break;
+			case "person" : list = dao.DAO.getPatients();
+				break;
+			default: list = dao.DAO.getPersons();
+			};
+			request.setAttribute("contentpage", "users.jsp");
+			request.setAttribute("list", list);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
 			

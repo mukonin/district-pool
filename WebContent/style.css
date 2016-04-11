@@ -1,37 +1,46 @@
-#header{
+@import "compass/css3";
+
+.wrapper {
+display: flex;
+flex-direction:column;
+}
+
+.header {
 background:#D9D9D9;
+font-size: 4.5vmin;
 border:0.5vmin solid #5C5C5C;
-padding: 0.1vmin;
+padding:0.5vmin;
 margin:0.5vmin;
-height:4.5vh;
+height:6vh;
+align-content:center;
 }
-#content{
+
+.footer {
 background:#D9D9D9;
 border:0.5vh solid #5C5C5C;
-padding: 0.1vmin;
-margin:0.5vmin;
-font-size: 3vmin;
-overflow:auto;
-height:87.3vh;
-}
-#footer{
-background:#D9D9D9;
-border:0.5vh solid #5C5C5C;
-position:absolute;
-bottom:0;
-right:0;
-left:0;
 font-size: 2.5vmin;
 height:3.2vh;
 padding: 0.1vmin;
 margin:0.5vmin;
 text-align:right;
 }
-body{
+
+.main {
+background:#D9D9D9;
+border:0.5vh solid #5C5C5C;
+padding: 0.5vmin;
+margin:0.5vmin;
+font-size: 3vmin;
+overflow:auto;
+height:82.8vh;
+}
+
+body {
 background:#D9D9D9;
 margin:0;
 padding:0;
 }
+
 .button {
 background-color: #4CAF50;
 border: none;
@@ -39,7 +48,45 @@ color: white;
 padding: 1vmin 1vmin;
 text-align: center;
 text-decoration: none;
-display: inline-block;
-font-size: 2vmin;
-vertical-align:top;
+display: inline;
+font-size: 3vmin;
+vertical-align:middle;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+padding: 1vmin 1vmin;
+font-size: 3vmin;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 10vw;
+}
+
+.dropdown-content a {
+    color: black;
+padding: 1vmin 1vmin;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
 }
