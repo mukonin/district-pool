@@ -44,6 +44,6 @@
 <br>
 <input type = "hidden" name = "id" value = "${user.id}"/>
 <button type="submit" value="update" name="action">Save</button>
-<button type="reset">Undo</button>
+<button type="reset">Reset</button>
 <input class="buttonSend" onclick="window.history.back();" type="button" value="Back"/>
 </form>

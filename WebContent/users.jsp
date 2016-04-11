@@ -4,12 +4,12 @@
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <table>
     <tr>
-        <th>User (clickable)</th>
+        <th>Users</th>
     </tr>
 	<c:forEach var="user" items="${list}">
     <tr>
         <td onclick="document.location = 'http://localhost:8080/hospital/UserServlet?id=${user.id}';">
-            <c:out value="${user}"/>
+            <a href="http://localhost:8080/hospital/UserServlet?id=${user.id}"><c:out value="${user}"/></a>
         </td>
         <td>
         	<form action="http://localhost:8080/hospital/EditServlet?action&id=${user.id}">
