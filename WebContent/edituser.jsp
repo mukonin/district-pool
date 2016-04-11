@@ -30,7 +30,7 @@
     </tr>
     <tr>
     	<td>Birth date:</td>
-    	<td><input type="text" name="date" id="datepicker" required pattern="\d{2}\.\d{2}\.\d{4}" value="${user.date }"></td>
+    	<td><input type="text" name="date" id="datepicker" required pattern="\d{2}\.\d{2}\.\d{4}" value="<joda:format pattern="dd.MM.yyyy" value="${user.date}"/>"></td>
     </tr>
     <tr>
     	<td>Role</td>
@@ -43,7 +43,7 @@
 </table>
 <br>
 <input type = "hidden" name = "id" value = "${user.id}"/>
-<button type="submit" value="add" name="action">Add User</button>
-<button type="reset">Clear form</button>
+<button type="submit" value="update" name="action">Save</button>
+<button type="reset">Undo</button>
 <input class="buttonSend" onclick="window.history.back();" type="button" value="Back"/>
 </form>
