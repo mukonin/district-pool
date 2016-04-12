@@ -1,4 +1,5 @@
 @import "compass/css3";
+@import url("base.css");
 
 .wrapper {
 display: flex;

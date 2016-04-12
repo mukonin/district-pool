@@ -8,15 +8,6 @@
 
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script>
-	$(function() {
-		$( "#datepicker" ).datepicker({
-			dateFormat: 'dd.mm.yy',
-			maxDate: "+0d",
-			minDate: "-100y"
-			});
-		});
-</script>
 
 <form action="http://localhost:8080/hospital/EditServlet?action&fname&lname&date&role">
 <table>
@@ -30,7 +21,7 @@
     </tr>
     <tr>
     	<td>Birth date:</td>
-    	<td><input type="text" name="date" id="datepicker" required pattern="\d{2}\.\d{2}\.\d{4}" value="<joda:format pattern="dd.MM.yyyy" value="${user.date}"/>"></td>
+    	<td>input type="text" name="date" id="datepicker" required pattern="\d{2}\.\d{2}\.\d{4}" value="<joda:format pattern="dd.MM.yyyy" value="${user.date}"/>"></td>
     </tr>
     <tr>
     	<td>Role</td>
@@ -47,3 +38,7 @@
 <button type="reset">Reset</button>
 <input class="buttonSend" onclick="window.history.back();" type="button" value="Back"/>
 </form>
+
+
+  
+			

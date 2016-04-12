@@ -39,41 +39,43 @@ public class EditServlet extends HttpServlet {
 		Person doctor;
 		Person person;
 		Long id;
-		String role;
+		Random random;
 		
 		switch (action) {
 		case "delete" : id = Long.parseLong(request.getParameter("id"));
 			person = dao.DAO.getById(id);
-			request.setAttribute("user", person);
-			role = dao.DAO.getRole(person);
+			request.setAttribute("message", "User " + person.toString() + " deleted");
 			dao.DAO.deleteUser(person);
-			switch (role) {
-			case "doctor" : list = dao.DAO.getDoctors();
-				break;
-			case "person" : list = dao.DAO.getPatients();
-				break;
-			default: list = dao.DAO.getPersons();
-			};
+			list = dao.DAO.getPersons();
 			request.setAttribute("contentpage", "users.jsp");
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
 			
-			//show add new user form
+			//adding new user
 			
-		case "new" : request.setAttribute("showcontent", true); 
-			request.setAttribute("pagename", "Add New User");
-			request.setAttribute("contentpage", "edituser.jsp");
+		case "new" : person = new Person();
+			person.setFirstName(request.getParameter("fname"));
+			person.setLastName(request.getParameter("lname"));
+			person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
+			random = new Random();
+			person.setId((long) (random.nextDouble() * 9000000000L) + 1000000000L);
+			dao.DAO.addUser(person);
+			dao.DAO.setRole(person, request.getParameter("role").toLowerCase());
+			request.setAttribute("contentpage", "users.jsp");
+			list = dao.DAO.getPersons();
+			request.setAttribute("list", list);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
+			break;
 			
-			//adding new user / updating existing
+			// updating existing
 			
 		case "update" : person = new Person();
 			if (request.getParameter("id").equals("")) {
 				person.setFirstName(request.getParameter("fname"));
 				person.setLastName(request.getParameter("lname"));
 				person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
-				Random random = new Random();
+				random = new Random();
 				person.setId((long) (random.nextDouble() * 9000000000L) + 1000000000L);
 				switch (request.getParameter("role")) {
 				case "doc" : dao.DAO.addDoctor(person);
