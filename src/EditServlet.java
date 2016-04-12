@@ -151,7 +151,27 @@ public class EditServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		String action = request.getParameter("action");
+		ArrayList<Person> list;
+		Person doctor;
+		Person person;
+		Long id;
+		Random random;
+		
+		switch (action) {
+		case "delete" : id = Long.parseLong(request.getParameter("id"));
+			person = dao.DAO.getById(id);
+			request.setAttribute("message", "User " + person.toString() + " deleted");
+			dao.DAO.deleteUser(person);
+			list = dao.DAO.getPersons();
+			request.setAttribute("contentpage", "users.jsp");
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			break;
+		default : request.getRequestDispatcher("index.jsp").forward(request, response);
+		}
+		
 		doGet(request, response);
 	}
 
