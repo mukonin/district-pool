@@ -20,15 +20,21 @@
 				<td>${user.firstName}</td>
 				<td>${user.lastName}</td>
 				<td><joda:format pattern="dd.MM.yyyy" value="${user.date}"/></td>
-				<td class="text-right">
+				<td class="text-center col-md-1">
+					<form  action="http://localhost:8080/hospital/UserServlet?id=${user.id}">
+						<button type="submit" class="btn btn-primary btn-sm">View</button>
+						<input type = "hidden" name = "id" value = "${user.id}"/>
+					</form>
+				</td>
+				<td class="text-center col-md-1">
 					<form  action="http://localhost:8080/hospital/EditServlet?action&id=${user.id}">
 						<button type="submit" value="edit" name="action" class="btn btn-warning btn-sm">Edit</button>
 						<input type = "hidden" name = "id" value = "${user.id}"/>
 					</form>
 				</td>
-				<td class="text-right">
+				<td class="text-center col-md-1">
 					<form action="/hospital/es" method="post">
-						<button type="submit" value="delete" name="action" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+						<button type="submit" value="delete" name="action" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete ${user.firstName} ${user.lastName}');">Delete</button>
 						<input type = "hidden" name = "id" value = "${user.id}"/>
 					</form>
 				</td>

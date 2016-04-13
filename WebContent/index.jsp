@@ -31,6 +31,7 @@
 				</div>
             
 				<div class="col-sm-9 text-center">
+				
 					<c:if test="${not empty message}">
 						<div class="alert alert-warning fade in">							
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

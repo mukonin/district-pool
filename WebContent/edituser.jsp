@@ -6,6 +6,7 @@
 <br>
 
 <div class="container col-md-12">
+	<p class="validateTips">All form fields are required.</p>
 	<form class="form-horizontal" role="form" action="/hospital/es" method="post">
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="fname">First Name:</label>
@@ -39,7 +40,7 @@
 		<div class="form-group text-left">        
 			<div class="col-sm-offset-2 col-sm-10">
 				<input type = "hidden" name = "id" value = "${user.id}"/>
-				<button type="submit" value="update" name="action" class="btn btn-default">Save</button>	
+				<button type="submit" value="update" name="action" class="btn btn-default" id="create-user">Save</button>	
 				<button type="reset" class="btn btn-default">Reset</button>
 			</div>
 		</div>
