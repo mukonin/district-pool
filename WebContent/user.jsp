@@ -2,8 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
-<div class="container col-sm-12">
-	
+<div class="container col-sm-12">	
 	<c:if test="${role == 'patient'}">
 		<div class="panel panel-default">
 	  		<div class="panel-heading">
@@ -64,11 +63,7 @@
 				other doctor stuff
 			</div>
 		</div>
-	</c:if>
-	
-	
-	
-	
+	</c:if>	
 </div>
 
 <!--

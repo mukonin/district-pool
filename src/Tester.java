@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class Tester {
     public static void main(String[] args) throws IOException, JAXBException {
         Hospital hospital;
-        Hospital hospital1 = new Hospital();
 
        
         HospitalIO io = new TXT();
@@ -26,16 +25,6 @@ public class Tester {
             DAO.dropDB();
             DAO.createDB();
             SQL.writeHospital(hospital);
-
-            Person person1 = PersonUtils.valueOf("Daniels Jack (12.12.1940)");
-            Person person2 = PersonUtils.valueOf("Jack Daniels (12.12.1941)");
-
-
-            DAO.addUser(person1);
-            DAO.addUser(person2);
-
-            ArrayList<Person> list = DAO.getByFullName("Jack Daniels");
-            System.out.println(list);
 
 
 

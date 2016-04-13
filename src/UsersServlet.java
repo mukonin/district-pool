@@ -32,15 +32,8 @@ public class UsersServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		ArrayList<Person> list;
-		Person person;
 		
 		switch (action) {
-		case "users" : list = dao.DAO.getPersons();
-			request.setAttribute("pagename", "Users");
-			request.setAttribute("list", list);
-			request.setAttribute("contentpage", "users.jsp");
-			request.getRequestDispatcher("index.jsp").forward(request, response);
-			break;
 		case "doctors" : list = dao.DAO.getDoctors();
 			request.setAttribute("pagename", "Doctors");
 			request.setAttribute("list", list);

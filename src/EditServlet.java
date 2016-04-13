@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -145,6 +146,7 @@ public class EditServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		ArrayList<Person> list = new ArrayList<>();
 		Person doctor;
+		Person patient;
 		Person person;
 		Long id;
 		Random random;
@@ -192,8 +194,7 @@ public class EditServlet extends HttpServlet {
 				request.setAttribute("pagename", "Patients");
 				request.setAttribute("message", "Patient " + person + " information updated");	
 				break;				
-			};
-			//list = dao.DAO.getPersons();
+			};			
 			request.setAttribute("list", list);	
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);		
@@ -223,6 +224,22 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);		
 		break;
+		
+		// link doctor patient
+		
+		case "link" : 
+			patient = dao.DAO.getById(Long.parseLong(request.getParameter("patient_id")));
+			doctor = dao.DAO.getById(Long.parseLong(request.getParameter("doctor_id")));
+			dao.DAO.linkDoctorPatient(doctor, patient);
+			
+			
+			//request.setAttribute("message", request.getHeader("Referer"));
+			//response.sendRedirect(response.encodeRedirectURL(request.getHeader("Referer")));
+			
+			
+			
+			
+			response.sendRedirect(response.encodeRedirectURL(request.getParameter("doctor_id")));
 		
 		default : request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
