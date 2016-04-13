@@ -22,7 +22,6 @@
 				<div class="col-sm-3 sidenav">
 					<ul class="nav nav-pills nav-stacked">
 						<li><a href="../hospital">Home</a></li>
-						<li><a href="UsersServlet?action=users">Users</a></li>
 						<li><a href="UsersServlet?action=doctors">Doctors</a></li>
 						<li><a href="UsersServlet?action=patients">Patients</a></li>
 						<li><a href="EditServlet?action=new">Add User</a></li>

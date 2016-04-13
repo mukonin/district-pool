@@ -4,45 +4,25 @@
 
 <div class="container col-sm-12">
 	
-	<div class="panel panel-default">
-  		<div class="panel-heading">
-  			<h2>User Information</h2>
-  		</div>
-  		<div class="panel-body">
-  			<div class="row">
-				<div class="col-sm-6 text-right">
-					First name<br>
-					Last Name<br>
-					Date of birth<br>
-					ID<br>
-					Role<br>
-				</div>
-				<div class="col-sm-6 text-left">
-					<c:out value="${user.firstName}"/><br>
-					<c:out value="${user.lastName}"/><br>
-					<joda:format pattern="d MMMM yyyy" value="${user.date}" locale="US"/><br>
-					<c:out value="${user.id}"/><br>
-					<c:out value="${role}"/><br>
-				</div>
-			</div>
-  		</div>
-	</div>	
-
 	<c:if test="${role == 'patient'}">
 		<div class="panel panel-default">
 	  		<div class="panel-heading">
-				<h2>Patient Information</h2>			
+				<h4>Patient ${user.firstName} ${user.lastName}</h4>			
 			</div>			
 			<div class="panel-body">
 				<c:if test="${not empty doctor}">
-					Doctor: ${doctor.firstName} ${doctor.lastName} 
-					<button class="btn btn-primary btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">View</button>
-					<hr>
-					other patient stuff	
+					Doctor: ${doctor.firstName} ${doctor.lastName}
+					<br>	
+					<button class="btn btn-warning btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Select</button>
+					<button class="btn btn-danger btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Release</button>
 				</c:if>
 				<c:if test="${empty doctor}">
-						
+					Doctor: none
+					<br>	
+					<button class="btn btn-warning btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Select</button>
 				</c:if>
+				<hr>
+				other patient stuff	
 			</div>						
 		</div>
 	</c:if>	
@@ -50,34 +30,36 @@
 	<c:if test="${role == 'doctor'}">
 		<div class="panel panel-default">
 	  		<div class="panel-heading">
-				<h2>Doctor Information</h2>
+				<h4>Patients</h4>
 			</div>
 			<div class="panel-body">
 				<c:if test="${not empty list}">
-					<h4>Patients</h4>
 					<table class="table table-striped text-left">
 						<thead>
 							<tr>
-								<th>First Name</th>
-								<th>Last Name</th>
+								<th>Name</th>
+								<th></th>
 							</tr>
 						</thead>
 				    	<tbody>
 				    		<c:forEach var="user" items="${list}">
 								<tr>
-									<td>${user.firstName}</td>
-									<td>${user.lastName}</td>
+									<td>${user.firstName} ${user.lastName}</td>
 									<td class="text-center col-md-1">
-										<button class="btn btn-primary btn-sm" onclick="window.location.href='UserServlet?id=${user.id}'">View</button>
+										<button class="btn btn-danger btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Release</button>
 									</td>							
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</c:if>
-				<c:if test="${empty list}">
-						
-				</c:if>
+				<c:if test="${empty list}">		
+					Doctor has no patients
+					<br>
+				</c:if>		
+								
+				<button class="btn btn-warning btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Add Patient</button>
+				
 				<hr>
 				other doctor stuff
 			</div>
