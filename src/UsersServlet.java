@@ -36,21 +36,18 @@ public class UsersServlet extends HttpServlet {
 		
 		switch (action) {
 		case "users" : list = dao.DAO.getPersons();
-			request.setAttribute("showcontent", true);
 			request.setAttribute("pagename", "Users");
 			request.setAttribute("list", list);
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
 		case "doctors" : list = dao.DAO.getDoctors();
-			request.setAttribute("showcontent", true);
 			request.setAttribute("pagename", "Doctors");
 			request.setAttribute("list", list);
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
 		case "patients" : list = dao.DAO.getPatients();
-			request.setAttribute("showcontent", true);
 			request.setAttribute("pagename", "Patients");
 			request.setAttribute("list", list);
 			request.setAttribute("contentpage", "users.jsp");

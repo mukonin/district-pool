@@ -153,7 +153,7 @@ public class EditServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String action = request.getParameter("action");
-		ArrayList<Person> list;
+		ArrayList<Person> list = new ArrayList<>();
 		Person doctor;
 		Person person;
 		Long id;
@@ -169,6 +169,33 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
+			
+			
+			
+		case "update" : person = new Person();
+			id = Long.parseLong(request.getParameter("id"));
+			person.setId(id);
+			person.setFirstName(request.getParameter("fname"));
+			person.setLastName(request.getParameter("lname"));
+			person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
+			dao.DAO.updateUser(person);
+			switch (request.getParameter("role")) {
+			case "doc" : dao.DAO.setRole(person, "doctor");
+				list = dao.DAO.getDoctors();
+				request.setAttribute("pagename", "Doctors");
+				break;
+			case "pat" : dao.DAO.setRole(person, "patient");
+				list = dao.DAO.getPatients();
+				request.setAttribute("pagename", "Patients");
+				break;				
+			};
+			request.setAttribute("list", list);
+			request.setAttribute("message", "User Data Updated");	
+			request.setAttribute("contentpage", "users.jsp");
+			request.getRequestDispatcher("index.jsp").forward(request, response);		
+		break;
+		
+		
 		default : request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		

@@ -11,6 +11,7 @@
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>		
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script src="script.js"></script>
 		<link rel="stylesheet" type="text/css" href="styletest.css">		
 		<title>Hospital</title>		
 	</head>
