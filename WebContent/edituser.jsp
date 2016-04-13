@@ -22,7 +22,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="lname">Date of Birth:</label>
 			<div class="col-sm-10">          
-				<input type="text" name="date" class="form-control" name="date" id="datepicker" data-date-format="mm.dd.yyyy" placeholder="dd.mm.yyyy" value="<joda:format value="${user.date}" pattern="dd.MM.yyyy"/>">
+				<input type="text" class="form-control" name="date" id="datepicker" data-date-format="mm.dd.yyyy" placeholder="dd.mm.yyyy" value="<joda:format value="${user.date}" pattern="dd.MM.yyyy"/>">
 			</div>
 		</div>
 		<!-- 

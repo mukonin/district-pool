@@ -1,4 +1,13 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>		
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <script>
   $(function() {
@@ -9,93 +18,64 @@
 			});
 		});
   
-  $(function() {
-    var dialog, form,
-      fname = $( "#fname" ),
-      lname = $( "#lname" ),
-      date = $('#datepicker'),
-      allFields = $( [] ).add( fname ).add( lname ).add ( date ),
-      tips = $( ".validateTips" );
+$(function() {
+	var dialog, 
+	form,
+	fname = $( "#fname" ),
+	lname = $( "#lname" ),
+	date = $('#datepicker'),
+	allFields = $( [] ).add( fname ).add( lname ).add ( date ),
+	tips = $( ".validateTips" );
  
-    function updateTips( t ) {
-      tips
-        .text( t )
-        .addClass( "ui-state-highlight" );
-      setTimeout(function() {
-        tips.removeClass( "ui-state-highlight", 1500 );
-      }, 500 );
-    }
+	function updateTips( t ) {
+		tips
+		.text( t )
+		.addClass( "ui-state-highlight" );
+		setTimeout(function() {
+		tips.removeClass( "ui-state-highlight", 1500 );
+		}, 500 );
+	}
  
-    function checkLength( o, n, min, max ) {
-      if ( o.val().length > max || o.val().length < min ) {
-        o.addClass( "ui-state-error" );
-        updateTips( "Length of " + n + " must be between " +
-          min + " and " + max + "." );
-        return false;
-      } else {
-        return true;
-      }
-    }
+	function checkLength( o, n, min, max ) {
+		if ( o.val().length > max || o.val().length < min ) {
+		o.addClass( "ui-state-error" );
+		updateTips( "Length of " + n + " must be between " +
+		min + " and " + max + "." );
+		return false;
+		} else {
+		return true;
+		}
+	}
  
-    function checkRegexp( o, regexp, n ) {
-      if ( !( regexp.test( o.val() ) ) ) {
-        o.addClass( "ui-state-error" );
-        updateTips( n );
-        return false;
-      } else {
-        return true;
-      }
-    }
+	function checkRegexp( o, regexp, n ) {
+		if ( !( regexp.test( o.val() ) ) ) {
+		o.addClass( "ui-state-error" );
+		updateTips( n );
+		return false;
+		} else {
+		return true;
+		}
+	}
  
-    function addUser() {
-      var valid = true;
-      allFields.removeClass( "ui-state-error" );
-
-      valid = valid && checkLength( fname, "first name", 2, 16 );
-      valid = valid && checkRegexp( fname, /^[A-Z][a-z]+$/, "First name may consist of letters with first capital." );
-       valid = valid && checkLength( lname, "last name", 2, 16 );
-
-      valid = valid && checkRegexp( lname, /^[A-Z][a-z]+$/, "Last name may consist of letters with first capital." );
+	function addUser() {
+		var valid = true;
+		allFields.removeClass( "ui-state-error" );
+		valid = valid && checkLength( fname, "first name", 2, 16 );
+		valid = valid && checkRegexp( fname, /^[A-Z][a-z]+$/, "First name may consist of letters with first capital." );
+		valid = valid && checkLength( lname, "last name", 2, 16 );
+		valid = valid && checkRegexp( lname, /^[A-Z][a-z]+$/, "Last name may consist of letters with first capital." );
+		valid = valid && checkRegexp( date, /^\d{2}\.\d{2}\.\d{4}$/, "Wrong date format")
+		return valid;
+	}
  
-      if ( valid ) {
-       	var jspcall = "http://localhost:8080/hospital/EditServlet?action=new&fname=" + $( "#fname" ).val();
-       	jspcall = jspcall + "&lname=" + $( "#lname" ).val() + "&date=" + date.datepicker({ dateFormat: 'dd,MM,yyyy' }).val();
-       	jspcall = jspcall + "&role=" + $( "#role" ).val();
-       	window.location.href = jspcall;
-        dialog.dialog( "close" );
-        
-      }
-      return valid;
-    }
- 
-    dialog = $( "#dialog-form" ).dialog({
-      autoOpen: false,
-      height: 360,
-      width: 350,
-      modal: true,
-      buttons: {
-        "Add New User": addUser,
-        Cancel: function() {
-          dialog.dialog( "close" );
-        }
-      },
-      close: function() {
-        form[ 0 ].reset();
-        allFields.removeClass( "ui-state-error" );
-      }
-    });
- 
-    form = dialog.find( "form" ).on( "submit", function( event ) {
-      event.preventDefault();
-      addUser();
-      
-    });
- 
-    $( "#create-user" ).button().on( "click", function() {
-      dialog.dialog( "open" );
-    });
-    
-  });
+	$( "#create-user" ).button().on( "click", function() {
+		//event.preventDefault();
+		if ( !(addUser()) )  {			
+		event.preventDefault();
+		};
+	});
+	
+});
   </script>
   
   
@@ -113,9 +93,9 @@
     .validateTips { border: 1px solid transparent; padding: 0.3em; }
 </style>
  
-<div id="dialog-form" title="Add new user">
+<div title="Add new user">
  	<p class="validateTips">All form fields are required.</p>
-		<form>
+		<form action="http://google.com">
 			<fieldset>
 				<label for="fname">First Name</label>
 				<input type="text" name="fname" id="fname" value="" class="text ui-widget-content ui-corner-all">
@@ -128,9 +108,7 @@
 						<option selected="selected">Patient</option>
 						<option>Doctor</option>
 					</select>
-				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 			</fieldset>
+					<button type="submit" id="create-user" class="button">Continue</button>
 		</form>
 </div>			
-
-<button id="create-user" class="button">Add New User</button>
