@@ -230,30 +230,51 @@ public class EditServlet extends HttpServlet {
 		// link doctor patient
 		
 		case "link" : 
-			person1 = dao.DAO.getById(Long.parseLong(request.getParameter("patient_id")));
-			person2 = dao.DAO.getById(Long.parseLong(request.getParameter("doctor_id")));
-			//dao.DAO.linkDoctorPatient(doctor, patient);
-			
-			
-			//request.setAttribute("message", request.getHeader("Referer"));
-			//response.sendRedirect(response.encodeRedirectURL(request.getHeader("Referer")));
-			
-			
-			
-			
-			response.sendRedirect(response.encodeRedirectURL(request.getParameter("doctor_id")));
+			person1 = dao.DAO.getById(Long.parseLong(request.getParameter("id1")));
+			person2 = dao.DAO.getById(Long.parseLong(request.getParameter("id2")));
+			dao.DAO.unlinkDoctorPatient(person1, person2);
+			if (dao.DAO.isDoctor(person1)) {
+				dao.DAO.linkDoctorPatient(person1, person2);
+			} else {
+				dao.DAO.linkDoctorPatient(person2, person1);
+			}
+			request.setAttribute("message", "Linked");
+			request.setAttribute("user", person1);
+			request.setAttribute("contentpage", "user.jsp");
+			request.getRequestDispatcher("UserServlet?id=" + request.getParameter("id1")).forward(request, response);
 			break;
+			
+		// unlink doctor and patient
 		
 		case "unlink" : 
 			person1 = dao.DAO.getById(Long.parseLong(request.getParameter("id1")));
 			person2 = dao.DAO.getById(Long.parseLong(request.getParameter("id2")));
-			//dao.DAO.unlinkDoctorPatient(person1, person2);
+			dao.DAO.unlinkDoctorPatient(person1, person2);
 			request.setAttribute("message", "Unlinked");
 			request.setAttribute("user", person1);
 			request.setAttribute("contentpage", "user.jsp");
 			request.getRequestDispatcher("UserServlet?id=" + request.getParameter("id1")).forward(request, response);	
 			break;
 			
+		// show linkage page
+			
+		case "linkpage" : 
+			person1 = dao.DAO.getById(Long.parseLong(request.getParameter("id1")));
+			request.setAttribute("user", person1);
+			switch (dao.DAO.getRole(person1)) {
+			case "doctor" :
+				list = dao.DAO.getPatients();
+				request.setAttribute("role", "doctor");
+				break;
+			case "patient" :
+				request.setAttribute("role", "patient");
+				list = dao.DAO.getDoctors();
+				break;				
+			};
+			request.setAttribute("list", list);
+			request.setAttribute("contentpage", "linkpage.jsp");
+			request.getRequestDispatcher("index.jsp").forward(request, response);		
+			break;			
 			
 		default : request.getRequestDispatcher("index.jsp").forward(request, response);
 		}

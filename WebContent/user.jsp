@@ -12,18 +12,20 @@
 				<c:if test="${not empty doctor}">
 					Doctor: ${doctor.firstName} ${doctor.lastName}
 					<br>
-						<form action="/hospital/es" method="post">
-							<button type="submit" value="unlink" name="action" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Release</button>
-							<input type = "hidden" name = "id1" value = "${user.id}"/>
-							<input type = "hidden" name = "id2" value = "${doctor.id}"/>
-						</form>
-					<button class="btn btn-warning btn-sm" onclick="window.location.href='UserServlet?id=${patient.id}'">Select</button>
-					<button class="btn btn-danger btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Release</button>
+					<form action="/hospital/es" method="post">
+						<button type="submit" value="unlink" name="action" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Release</button>
+						<input type = "hidden" name = "id1" value = "${user.id}"/>
+						<input type = "hidden" name = "id2" value = "${doctor.id}"/>
+						<button class="btn btn-warning btn-sm" value="linkpage" name="action" >Select</button>
+					</form>				
 				</c:if>
 				<c:if test="${empty doctor}">
 					Doctor: none
 					<br>	
-					<button class="btn btn-warning btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Select</button>
+					<form action="/hospital/es" method="post">						
+						<input type = "hidden" name = "id1" value = "${user.id}"/>
+						<button class="btn btn-warning btn-sm" value="linkpage" name="action" >Select</button>
+					</form>	
 				</c:if>
 				<hr>
 				other patient stuff	
@@ -65,9 +67,10 @@
 					Doctor has no patients
 					<br>
 				</c:if>		
-								
-				<button class="btn btn-warning btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Add Patient</button>
-				
+				<form action="/hospital/es" method="post">
+					<input type = "hidden" name = "id1" value = "${user.id}"/>
+					<button class="btn btn-warning btn-sm" value="linkpage" name="action" >Select</button>
+				</form>		
 				<hr>
 				other doctor stuff
 			</div>
