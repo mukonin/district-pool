@@ -151,6 +151,18 @@ public class DAO {
             e.printStackTrace(System.out);
         }
     }
+    
+    public static void unlinkDoctorPatient(Person person1, Person person2) {
+    	 try {
+             Statement statement = connectToDB();
+             String sql = "DELETE FROM binds WHERE ( doctor_id = " + person1.getId() + " AND patient_id = " + 
+            		 person2.getId() + " ) OR ( doctor_id = " + person2.getId() + " AND patient_id = " + 
+            		 person1.getId() + " );";
+             statement.executeUpdate(sql);
+         } catch (Exception e) {
+             e.printStackTrace(System.out);
+         }
+    }
 
     public static void linkDoctorPatients(Person doctor, ArrayList<Person> list) {
         for (Person patient :list) {

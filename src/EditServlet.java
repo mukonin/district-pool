@@ -151,6 +151,8 @@ public class EditServlet extends HttpServlet {
 		Long id;
 		Random random;
 		String role;
+		Person person1;
+		Person person2;
 		
 		switch (action) {
 		
@@ -198,7 +200,7 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("list", list);	
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);		
-		break;
+			break;
 		
 		// add new new user
 		
@@ -223,14 +225,14 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("list", list);
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);		
-		break;
+			break;
 		
 		// link doctor patient
 		
 		case "link" : 
-			patient = dao.DAO.getById(Long.parseLong(request.getParameter("patient_id")));
-			doctor = dao.DAO.getById(Long.parseLong(request.getParameter("doctor_id")));
-			dao.DAO.linkDoctorPatient(doctor, patient);
+			person1 = dao.DAO.getById(Long.parseLong(request.getParameter("patient_id")));
+			person2 = dao.DAO.getById(Long.parseLong(request.getParameter("doctor_id")));
+			//dao.DAO.linkDoctorPatient(doctor, patient);
 			
 			
 			//request.setAttribute("message", request.getHeader("Referer"));
@@ -240,7 +242,19 @@ public class EditServlet extends HttpServlet {
 			
 			
 			response.sendRedirect(response.encodeRedirectURL(request.getParameter("doctor_id")));
+			break;
 		
+		case "unlink" : 
+			person1 = dao.DAO.getById(Long.parseLong(request.getParameter("id1")));
+			person2 = dao.DAO.getById(Long.parseLong(request.getParameter("id2")));
+			//dao.DAO.unlinkDoctorPatient(person1, person2);
+			request.setAttribute("message", "Unlinked");
+			request.setAttribute("user", person1);
+			request.setAttribute("contentpage", "user.jsp");
+			request.getRequestDispatcher("UserServlet?id=" + request.getParameter("id1")).forward(request, response);	
+			break;
+			
+			
 		default : request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		

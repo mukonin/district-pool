@@ -11,8 +11,13 @@
 			<div class="panel-body">
 				<c:if test="${not empty doctor}">
 					Doctor: ${doctor.firstName} ${doctor.lastName}
-					<br>	
-					<button class="btn btn-warning btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Select</button>
+					<br>
+						<form action="/hospital/es" method="post">
+							<button type="submit" value="unlink" name="action" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Release</button>
+							<input type = "hidden" name = "id1" value = "${user.id}"/>
+							<input type = "hidden" name = "id2" value = "${doctor.id}"/>
+						</form>
+					<button class="btn btn-warning btn-sm" onclick="window.location.href='UserServlet?id=${patient.id}'">Select</button>
 					<button class="btn btn-danger btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Release</button>
 				</c:if>
 				<c:if test="${empty doctor}">
@@ -29,7 +34,7 @@
 	<c:if test="${role == 'doctor'}">
 		<div class="panel panel-default">
 	  		<div class="panel-heading">
-				<h4>Patients</h4>
+				<h4>Doctor ${user.firstName} ${user.lastName} patients</h4>
 			</div>
 			<div class="panel-body">
 				<c:if test="${not empty list}">
@@ -41,11 +46,15 @@
 							</tr>
 						</thead>
 				    	<tbody>
-				    		<c:forEach var="user" items="${list}">
+				    		<c:forEach var="patient" items="${list}">
 								<tr>
-									<td>${user.firstName} ${user.lastName}</td>
+									<td>${patient.firstName} ${patient.lastName}</td>
 									<td class="text-center col-md-1">
-										<button class="btn btn-danger btn-sm" onclick="window.location.href='UserServlet?id=${doctor.id}'">Release</button>
+										<form action="/hospital/es" method="post">
+											<button type="submit" value="unlink" name="action" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Release</button>
+											<input type = "hidden" name = "id1" value = "${user.id}"/>
+											<input type = "hidden" name = "id2" value = "${patient.id}"/>
+										</form>
 									</td>							
 								</tr>
 							</c:forEach>
