@@ -56,9 +56,9 @@ public class MainServlet extends HttpServlet {
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("users.jsp").forward(request, response);
 			break;
-		case "Patients" : list = dao.DAO.getPatients();
+		case "Patients" : //list = dao.DAO.getPatients();
 			request.setAttribute("page", "Patients");
-			request.setAttribute("list", list);
+			//request.setAttribute("list", list);
 			request.getRequestDispatcher("users.jsp").forward(request, response);
 			break;
 		case "New" : request.setAttribute("page", "Add New User");

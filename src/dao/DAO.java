@@ -260,15 +260,16 @@ public class DAO {
         return list;
     }
 
-    public static ArrayList<Person> getPatients() {
-        ArrayList<Person> list = new ArrayList<>();
+    public static ArrayList<Patient> getPatients() {
+        ArrayList<Patient> list = new ArrayList<>();
         try {
             Statement statement = connectToDB();
-            String sql = "SELECT * FROM roles JOIN users ON roles.id = users.id WHERE role = 'patient';";
+            
+            /*String sql = "SELECT * FROM roles JOIN users ON roles.id = users.id WHERE role = 'patient';";
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next())
             {
-                Person person = new Person();
+                Patient person = new Patient();
                 person.setId(resultSet.getLong("id"));
                 person.setFirstName(resultSet.getString("firstname"));
                 person.setLastName(resultSet.getString("lastname"));
@@ -278,7 +279,35 @@ public class DAO {
             resultSet.close();
         } catch (Exception e) {
             e.printStackTrace(System.out);
+        }*/
+            
+            String sql = "select * from roles join users on roles.id = users.id left join binds on roles.id" + 
+            " = binds.patient_id left join users as doctors on doctors.id = binds.doctor_id where role = 'patient';";
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next())
+            {
+                Patient patient = new Patient();
+                patient.setId(resultSet.getLong("users.id"));
+                patient.setFirstName(resultSet.getString("users.firstname"));
+                patient.setLastName(resultSet.getString("users.lastname"));
+                patient.setDate(new DateTime(resultSet.getDate("users.date").getTime()));
+                if ( ! (resultSet.getString("doctors.firstname") == null)) {
+                Person doctor = new Person();
+                doctor.setId(resultSet.getLong("doctors.id"));
+                doctor.setFirstName(resultSet.getString("doctors.firstname"));
+                doctor.setLastName(resultSet.getString("doctors.lastname"));
+                doctor.setDate(new DateTime(resultSet.getDate("doctors.date").getTime()));
+                patient.setDoctor(doctor);
+                } else {
+                	patient.setDoctor(null);
+                }
+                list.add(patient);
+            }
+            resultSet.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
         }
+        
         return list;
     }
 

@@ -6,6 +6,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import entities.Person;
 
+import java.util.Comparator;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -97,4 +98,11 @@ public abstract class PersonUtils {
         	return false;
         }
     }
+    
+    public static final Comparator<Person> DATA_SORT = new Comparator<Person>() {
+    	public int compare(Person p1, Person p2) {
+    		return p1.getDate().compareTo(p2.getDate());
+    	}
+    };
+    
 }

@@ -10,21 +10,28 @@
 			</div>			
 			<div class="panel-body">
 				<c:if test="${not empty doctor}">
-					Doctor: ${doctor.firstName} ${doctor.lastName}
+					<a href = "http://localhost:8080/hospital/UserServlet?id=${doctor.id}">Doctor: ${doctor.firstName} ${doctor.lastName}</a>
 					<br>
-					<form action="/hospital/es" method="post">
-						<button type="submit" value="unlink" name="action" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Release</button>
+					<br>
+					<form action="/hospital/EditServlet" method="post">
+						<button type="submit" value="unlink" name="action" class="btn btn-md btn-danger" data-toggle="tooltip" title="Remove doctor">
+  							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
 						<input type = "hidden" name = "id1" value = "${user.id}"/>
-						<input type = "hidden" name = "id2" value = "${doctor.id}"/>
-						<button class="btn btn-warning btn-sm" value="linkpage" name="action" >Select</button>
+						<input type = "hidden" name = "id2" value = "${doctor.id}"/>						
+						<button type="submit" value="linkpage" name="action" class="btn btn-md btn-warning" data-toggle="tooltip" title="Link to doctor">
+  							<span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+						</button>
 					</form>				
 				</c:if>
 				<c:if test="${empty doctor}">
 					Doctor: none
 					<br>	
-					<form action="/hospital/es" method="post">						
+					<form action="/hospital/EditServlet" method="post">						
 						<input type = "hidden" name = "id1" value = "${user.id}"/>
-						<button class="btn btn-warning btn-sm" value="linkpage" name="action" >Select</button>
+						<button type="submit" value="linkpage" name="action" class="btn btn-md btn-warning" data-toggle="tooltip" title="Link to doctor">
+  							<span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+						</button>
 					</form>	
 				</c:if>
 				<hr>
@@ -50,10 +57,12 @@
 				    	<tbody>
 				    		<c:forEach var="patient" items="${list}">
 								<tr>
-									<td>${patient.firstName} ${patient.lastName}</td>
+									<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${patient.id}'">${patient.firstName} ${patient.lastName}</td>
 									<td class="text-center col-md-1">
-										<form action="/hospital/es" method="post">
-											<button type="submit" value="unlink" name="action" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Release</button>
+										<form action="/hospital/EditServlet" method="post">
+											<button type="submit" value="unlink" name="action" class="btn btn-md btn-danger" data-toggle="tooltip" title="Remove patient">
+  												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+											</button>
 											<input type = "hidden" name = "id1" value = "${user.id}"/>
 											<input type = "hidden" name = "id2" value = "${patient.id}"/>
 										</form>
@@ -67,9 +76,11 @@
 					Doctor has no patients
 					<br>
 				</c:if>		
-				<form action="/hospital/es" method="post">
+				<form action="/hospital/EditServlet" method="post">
 					<input type = "hidden" name = "id1" value = "${user.id}"/>
-					<button class="btn btn-warning btn-sm" value="linkpage" name="action" >Select</button>
+					<button type="submit" value="linkpage" name="action" class="btn btn-md btn-warning" data-toggle="tooltip" title="Add patient">
+  							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>
 				</form>		
 				<hr>
 				other doctor stuff

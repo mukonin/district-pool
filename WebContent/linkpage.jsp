@@ -6,7 +6,7 @@
 	<div class="panel panel-default">
 	  	<div class="panel-heading">
 			<c:if test="${role == 'patient'}">
-				<h4>Patient ${user.firstName} ${user.lastName} link to doctor</h4>	
+				<h4>Link patient ${user.firstName} ${user.lastName} to doctor</h4>	
 			</c:if>	
 			<c:if test="${role == 'doctor'}">
 				<h4>Doctor ${user.firstName} ${user.lastName} add patient</h4>	
@@ -27,7 +27,7 @@
 								<td>${user1.firstName} ${user1.lastName}</td>
 								<td class="text-center col-md-1">
 									<form action="/hospital/es" method="post">
-										<button type="submit" value="link" name="action" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Select</button>
+										<button type="submit" value="link" name="action" class="btn btn-danger btn-sm">Select</button>
 										<input type = "hidden" name = "id1" value = "${user.id}"/>
 										<input type = "hidden" name = "id2" value = "${user1.id}"/>
 									</form>

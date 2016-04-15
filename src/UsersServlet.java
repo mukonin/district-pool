@@ -2,6 +2,8 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.omg.CORBA.DATA_CONVERSION;
+
+import entities.Patient;
 import entities.Person;
 
 /**
@@ -32,17 +37,24 @@ public class UsersServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		ArrayList<Person> list;
+		ArrayList<Patient> list2;
 		
 		switch (action) {
 		case "doctors" : list = dao.DAO.getDoctors();
 			request.setAttribute("pagename", "Doctors");
 			request.setAttribute("list", list);
+			if (request.getParameterMap().containsKey("sort") && request.getParameter("sort").equals("true")) {
+				Collections.sort(list, utils.PersonUtils.DATA_SORT);
+			}
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
-		case "patients" : list = dao.DAO.getPatients();
+		case "patients" : list2 = dao.DAO.getPatients();
 			request.setAttribute("pagename", "Patients");
-			request.setAttribute("list", list);
+			request.setAttribute("list", list2);
+			if (request.getParameterMap().containsKey("sort") && request.getParameter("sort").equals("true")) {
+				Collections.sort(list2, utils.PersonUtils.DATA_SORT);
+			}
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
