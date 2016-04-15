@@ -34,10 +34,7 @@ public class PersonValidator {
     private boolean valid;
     
     private static final String personNameRexExp = "[A-Z][a-z]+";
-    private static final String dateRexExp = "\\(\\d{2}.\\d{2}.\\d{4}\\)";
-    private static final String dateFormatString = "dd.MM.yyyy";
     private static final Pattern patternName = Pattern.compile(personNameRexExp);
-    private static final Pattern patternDate = Pattern.compile(dateRexExp);
     
 	public Person getPerson() {
 		return person;
@@ -73,10 +70,6 @@ public class PersonValidator {
     	if ( ! patternName.matcher(lastName).matches()) {
     		valid = false;
     		builder.append("wrong last name format ");
-    	};
-    	if ( ! patternDate.matcher(date.toString(dateFormatString)).matches()) {
-    		valid = false;
-    		builder.append("wrong date format ");
     	};
     	if (date.isAfter(new DateTime().getMillis())) {
     		valid = false;

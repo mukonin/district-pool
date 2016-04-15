@@ -9,7 +9,7 @@
   		</div>
   		<div class="panel-body">
   			<p class="validateTips">All form fields are required.</p>
-			<form class="form-horizontal" role="form" action="/hospital/es" method="post">
+			<form class="form-horizontal" role="form" action="/hospital/EditServlet" method="post">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="fname">First Name:</label>
 					<div class="col-sm-10">

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import entities.Patient;
 import entities.Person;
 import utils.PersonUtils;
+import utils.PersonValidator;
 
 /**
  * Servlet implementation class EditServlet
@@ -45,7 +46,7 @@ public class EditServlet extends HttpServlet {
 		Random random;
 		
 		switch (action) {
-		case "delete" : id = Long.parseLong(request.getParameter("id"));
+		/*case "delete" : id = Long.parseLong(request.getParameter("id"));
 			person = dao.DAO.getById(id);
 			request.setAttribute("message", "User " + person.toString() + " deleted");
 			dao.DAO.deleteUser(person);
@@ -53,7 +54,7 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("contentpage", "users.jsp");
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
-			break;
+			break;*/
 			
 			//adding new user
 			
@@ -63,7 +64,7 @@ public class EditServlet extends HttpServlet {
 			
 			// updating existing
 			
-		case "update" : person = new Person();
+		/*case "update" : person = new Person();
 			if (request.getParameter("id").equals("")) {
 				person.setFirstName(request.getParameter("fname"));
 				person.setLastName(request.getParameter("lname"));
@@ -120,18 +121,17 @@ public class EditServlet extends HttpServlet {
 				request.setAttribute("doctor", doctor);
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 			}
-			break;
+			break;*/
 			
 			//show edit user window
 			
 		case "edit" : person = dao.DAO.getById(Long.parseLong(request.getParameter("id")));
 			request.setAttribute("pagename", "Edit User Data: " + person);
 			request.setAttribute("user", person);
-			request.setAttribute("showcontent", true);
 			request.setAttribute("contentpage", "edituser.jsp");	
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;		
-		default : request.getRequestDispatcher("index.jsp").forward(request, response);
+		//default : request.getRequestDispatcher("index.jsp").forward(request, response);
 		};	
 		
 		
@@ -183,33 +183,43 @@ public class EditServlet extends HttpServlet {
 			
 		// update user info
 			
-		case "update" : person = new Person();
-			id = Long.parseLong(request.getParameter("id"));
-			person.setId(id);
-			person.setFirstName(request.getParameter("fname"));
-			person.setLastName(request.getParameter("lname"));
-			person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
-			dao.DAO.updateUser(person);
-			role = dao.DAO.getRole(person);
-			switch (role) {
-			case "doctor" : list = dao.DAO.getDoctors();
-				request.setAttribute("pagename", "Doctors");
-				request.setAttribute("message", "Doctor " + person + " information updated");	
-				request.setAttribute("list", list);	
-				break;
-			case "patient" : list2 = dao.DAO.getPatients();
-				request.setAttribute("pagename", "Patients");
-				request.setAttribute("message", "Patient " + person + " information updated");	
-				request.setAttribute("list", list2);	
-				break;				
-			};			
-			request.setAttribute("contentpage", "users.jsp");
+		case "update" : PersonValidator validator = new PersonValidator(request.getParameter("fname"), 
+				request.getParameter("lname"), PersonUtils.getDateFromString(request.getParameter("date")));
+			if (validator.isValid()) {
+				person = validator.getPerson();
+				id = Long.parseLong(request.getParameter("id"));
+				person.setId(id);
+				dao.DAO.updateUser(person);
+				role = dao.DAO.getRole(person);
+				switch (role) {
+				case "doctor" : 
+					list = dao.DAO.getDoctors();
+					request.setAttribute("pagename", "Doctors");
+					request.setAttribute("message", "Doctor " + person + " information updated");	
+					request.setAttribute("list", list);	
+					break;
+				case "patient" : 
+					list2 = dao.DAO.getPatients();
+					request.setAttribute("pagename", "Patients");
+					request.setAttribute("message", "Patient " + person + " information updated");	
+					request.setAttribute("list", list2);	
+					break;				
+				};
+				request.setAttribute("contentpage", "users.jsp");
+			} else {
+				request.setAttribute("message", "Error updating to DB, error message " + validator.getErrorMessage());
+				person = dao.DAO.getById(Long.parseLong(request.getParameter("id")));
+				request.setAttribute("pagename", "Edit User Data: " + person);
+				request.setAttribute("user", person);
+				request.setAttribute("contentpage", "edituser.jsp");
+			};
 			request.getRequestDispatcher("index.jsp").forward(request, response);		
 			break;
 		
 		// add new new user
 		
-		case "add" : person = new Person();
+		case "add" : 
+			person = new Person();
 			person.setFirstName(request.getParameter("fname"));
 			person.setLastName(request.getParameter("lname"));
 			person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
@@ -283,7 +293,7 @@ public class EditServlet extends HttpServlet {
 			request.getRequestDispatcher("index.jsp").forward(request, response);		
 			break;			
 			
-		default : request.getRequestDispatcher("index.jsp").forward(request, response);
+		//default : request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		
 		doGet(request, response);
