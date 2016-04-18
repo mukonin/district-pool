@@ -33,6 +33,11 @@ dependencies {
     compile 'taglibs:standard:1.1.2'
     compile 'joda-time:joda-time-jsptags:1.1.1'
     
+    compile 'javax.persistence:persistence-api:1.0.2'
+    compile 'javax.ejb:javax.ejb-api:3.2'
+    
+    
+    
     
     
     

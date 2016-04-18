@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import javax.persistence.*;
+
 import utils.*;
 
 /**
@@ -19,12 +21,16 @@ import utils.*;
 @XmlRootElement(name="person")
 @XmlType(propOrder = {"id", "lastName", "firstName", "date"})
 @JsonPropertyOrder({ "id", "lastName", "firstName", "date"})
+@Entity
+@Table(name="users")
 public class Person implements Comparable<Person> {
     private String firstName;
     private String lastName;
     private DateTime date;
     private long id;
 
+    @Id
+    @Column(name="id") // not necessary
     @XmlAttribute(name = "id")
     public long getId() {
         return id;
