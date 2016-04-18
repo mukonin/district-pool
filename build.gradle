@@ -35,6 +35,7 @@ dependencies {
     
     compile 'javax.persistence:persistence-api:1.0.2'
     compile 'javax.ejb:javax.ejb-api:3.2'
+    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.3-M1'
     
     
     

@@ -36,16 +36,19 @@ public class Person implements Comparable<Person> {
         return id;
     }
 
+    @Column(name="firstname")
     public String getFirstName() {
         return firstName;
     }
 
+    @Column(name="lastname")
     public String getLastName() {
         return lastName;
     }
 
     @JsonSerialize(using = DateJsonAdapter.class)
     @XmlJavaTypeAdapter(DateXmlAdapter.class)
+    @Column(name="date")
     public DateTime getDate() {
         return date;
     }
