@@ -2,7 +2,7 @@ package entities;
 
 public class Patient extends Person {
 	
-	private Person doctor;
+	private Person doctor;	
 
 	public Person getDoctor() {
 		return doctor;
@@ -10,8 +10,6 @@ public class Patient extends Person {
 
 	public void setDoctor(Person doctor) {
 		this.doctor = doctor;
-	}
-	
-	
+	}	
 
 }

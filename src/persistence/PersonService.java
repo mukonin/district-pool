@@ -3,14 +3,12 @@ package persistence;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Random;
-
 import javax.persistence.*;
 
 import org.joda.time.DateTime;
 
+import entities.Patient;
 import entities.Person;
 
 public class PersonService {
@@ -87,28 +85,82 @@ public class PersonService {
     public static ArrayList<Person> getDoctors() {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
-	    
-    	
-    	
-        ArrayList<Person> list = new ArrayList<>();
-        try {
-            Statement statement = connectToDB();
-            String sql = "SELECT * FROM roles JOIN users ON roles.id = users.id WHERE role = 'doctor';";
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next())
-            {
-                Person person = new Person();
-                person.setId(resultSet.getLong("id"));
-                person.setFirstName(resultSet.getString("firstname"));
-                person.setLastName(resultSet.getString("lastname"));
-                person.setDate(new DateTime(resultSet.getDate("date").getTime()));
-                list.add(person);
-            }
-            resultSet.close();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return list;
+    	@SuppressWarnings("unchecked")
+		List<Person> list = (List<Person>) entitymanager.createQuery("SELECT p FROM roles JOIN Person p ON roles.id = users.id WHERE role = 'doctor';").getResultList();
+    	entitymanager.close();
+    	emfactory.close();
+    	return (ArrayList<Person>) list;
     }
+    
+    public static ArrayList<Patient> getPatients() {
+    	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+    	@SuppressWarnings("unchecked")
+		List<Person> list = (List<Person>) entitymanager.createQuery("SELECT p FROM roles JOIN Person p ON roles.id = users.id WHERE role = 'patient';").getResultList();
+    	ArrayList<Patient> list2 = new ArrayList<>();
+    	for (Person person : list) {
+    		Patient patient = (Patient) person;
+    		Person doctor = getDoctor(person);
+    		patient.setDoctor(doctor);
+    		list2.add(patient);
+    	}    	
+    	entitymanager.close();
+    	emfactory.close();
+    	return list2;
+    }
+    
+    public static ArrayList<Person> getPatients(Person doctor) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+    	@SuppressWarnings("unchecked")
+		List<Person> list = (List<Person>) entitymanager.createQuery("SELECT p FROM binds JOIN Person p ON binds.patient_id = users.id WHERE binds.doctor_id = '" +
+                    doctor.getId() + "';").getResultList();
+    	entitymanager.close();
+    	emfactory.close();
+    	return (ArrayList<Person>) list;
+    }
+    
+    public static String getRole (Person person) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    String result =  (String) entitymanager.createQuery("SELECT * FROM roles WHERE (id = '" + person.getId() + "');").getSingleResult();
+    	entitymanager.close();
+    	emfactory.close();
+    	return result;
+    }
+    
+    public static boolean isDoctor(Person person) {
+    	if (getRole(person).equals("doctor")) return true;
+    	return false;
+	}
+    
+    public static void updateUser(Person person) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    entitymanager.getTransaction().begin();
+	    entitymanager.merge(person);
+	    entitymanager.getTransaction().commit();
+    	entitymanager.close();
+    	emfactory.close();
+    } 
+    
+    public static void unlinkDoctorPatient(Person person1, Person person2) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    entitymanager.createQuery("DELETE FROM binds WHERE ( doctor_id = " + person1.getId() + " AND patient_id = " + 
+       		 person2.getId() + " ) OR ( doctor_id = " + person2.getId() + " AND patient_id = " + 
+       		 person1.getId() + " );").executeUpdate();
+    	entitymanager.close();
+    	emfactory.close();
+    }
+
+    public static void linkDoctorPatient(Person doctor, Person patient) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    entitymanager.createQuery("INSERT INTO binds (doctor_id, patient_id) VALUES ('" + doctor.getId() + "', '" +
+                patient.getId() + "');").executeUpdate();
+    	entitymanager.close();
+    	emfactory.close();
+	}
 
 }

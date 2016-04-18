@@ -40,7 +40,9 @@ public class UsersServlet extends HttpServlet {
 		ArrayList<Patient> list2;
 		
 		switch (action) {
-		case "doctors" : list = dao.DAO.getDoctors();
+		case "doctors" : 
+			//list = dao.DAO.getDoctors();
+			list = persistence.PersonService.getDoctors(); 
 			request.setAttribute("pagename", "Doctors");
 			request.setAttribute("list", list);
 			if (request.getParameterMap().containsKey("sort") && request.getParameter("sort").equals("true")) {
@@ -49,7 +51,9 @@ public class UsersServlet extends HttpServlet {
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
-		case "patients" : list2 = dao.DAO.getPatients();
+		case "patients" : 
+			//list2 = dao.DAO.getPatients();
+			list2 = persistence.PersonService.getPatients();
 			request.setAttribute("pagename", "Patients");
 			request.setAttribute("list", list2);
 			if (request.getParameterMap().containsKey("sort") && request.getParameter("sort").equals("true")) {
