@@ -27,24 +27,11 @@ public class UserServlet extends HttpServlet {
 		Long id = Long.parseLong(request.getParameter("id"));
 		Person person = dao.DAO.getById(id);
 		request.setAttribute("user", person);
-		request.setAttribute("role", dao.DAO.getRole(person));
-		
+		request.setAttribute("role", dao.DAO.getRole(person));		
 		Person doctor = dao.DAO.getDoctor(person);
-		request.setAttribute("doctor", doctor);
-		
+		request.setAttribute("doctor", doctor);		
 		ArrayList<Person> list = dao.DAO.getPatients(person);
 		request.setAttribute("list", list);
-		
-		//request.setAttribute("pagename", "User: " + person);
-		//request.setAttribute("showcontent", true);
-		//request.setAttribute("contentpage", "user.jsp");
-		//ArrayList<Person> list;
-		//Person doctor = dao.DAO.getDoctor(person);
-		
-		//request.setAttribute("doctor", doctor);
-		
-		
-		
 		request.setAttribute("contentpage", "user.jsp");
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}

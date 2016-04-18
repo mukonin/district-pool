@@ -38,90 +38,15 @@ public class EditServlet extends HttpServlet {
 		// TODO Auto-generated method stub		
 		
 		String action = request.getParameter("action");
-		ArrayList<Person> list;
-		ArrayList<Patient> list2;
-		Person doctor;
 		Person person;
-		Long id;
-		Random random;
 		
 		switch (action) {
-		/*case "delete" : id = Long.parseLong(request.getParameter("id"));
-			person = dao.DAO.getById(id);
-			request.setAttribute("message", "User " + person.toString() + " deleted");
-			dao.DAO.deleteUser(person);
-			list = dao.DAO.getPersons();
-			request.setAttribute("contentpage", "users.jsp");
-			request.setAttribute("list", list);
-			request.getRequestDispatcher("index.jsp").forward(request, response);
-			break;*/
-			
-			//adding new user
+		
+			//show add new user window
 			
 		case "new" : request.setAttribute("contentpage", "adduser.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
-			
-			// updating existing
-			
-		/*case "update" : person = new Person();
-			if (request.getParameter("id").equals("")) {
-				person.setFirstName(request.getParameter("fname"));
-				person.setLastName(request.getParameter("lname"));
-				person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
-				random = new Random();
-				person.setId((long) (random.nextDouble() * 9000000000L) + 1000000000L);
-				switch (request.getParameter("role")) {
-				case "doc" : dao.DAO.addDoctor(person);
-					break;
-				case "pat" : dao.DAO.addPatient(person);
-					break;
-				};
-				request.setAttribute("message", "Added to DB");			
-				request.setAttribute("pagename", "User: " + person);
-				request.setAttribute("user", person);
-				if (dao.DAO.getRole(person) == null) {
-					request.setAttribute("role", "none");
-				} else {
-					request.setAttribute("role", dao.DAO.getRole(person));
-				}
-				request.setAttribute("showcontent", true);
-				request.setAttribute("contentpage", "user.jsp");
-				doctor = dao.DAO.getDoctor(person);
-				list = dao.DAO.getPatients(person);
-				request.setAttribute("list", list);
-				request.setAttribute("doctor", doctor);
-				request.getRequestDispatcher("index.jsp").forward(request, response);			
-			} else {
-				id = Long.parseLong(request.getParameter("id"));
-				person = dao.DAO.getById(id);
-				person.setFirstName(request.getParameter("fname"));
-				person.setLastName(request.getParameter("lname"));
-				person.setDate(PersonUtils.getDateFromString(request.getParameter("date")));
-				dao.DAO.updateUser(person);
-				switch (request.getParameter("role")) {
-				case "doc" : dao.DAO.setRole(person, "doctor");
-					break;
-				case "pat" : dao.DAO.setRole(person, "patient");
-					break;				
-				};
-				request.setAttribute("message", "User Data Updated");			
-				request.setAttribute("pagename", "User: " + person);
-				request.setAttribute("user", person);
-				if (dao.DAO.getRole(person) == null) {
-					request.setAttribute("role", "none");
-				} else {
-					request.setAttribute("role", dao.DAO.getRole(person));
-				}
-				request.setAttribute("showcontent", true);
-				request.setAttribute("contentpage", "user.jsp");
-				doctor = dao.DAO.getDoctor(person);
-				list = dao.DAO.getPatients(person);
-				request.setAttribute("list", list);
-				request.setAttribute("doctor", doctor);
-				request.getRequestDispatcher("index.jsp").forward(request, response);
-			}
-			break;*/
 			
 			//show edit user window
 			
@@ -130,12 +55,8 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("user", person);
 			request.setAttribute("contentpage", "edituser.jsp");	
 			request.getRequestDispatcher("index.jsp").forward(request, response);
-			break;		
-		//default : request.getRequestDispatcher("index.jsp").forward(request, response);
-		};	
-		
-		
-		
+			break;	
+		};
 		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
