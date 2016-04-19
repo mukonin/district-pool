@@ -3,6 +3,7 @@ package entities;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import org.joda.time.DateTime;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -29,8 +30,28 @@ public class Person implements Comparable<Person> {
     private DateTime date;
     private long id;
     private Role role;
+    private Person doctor;
+    private Bind bind;    
 
-    @Id
+    @ManyToOne
+    public Bind getBind() {
+		return bind;
+	}
+
+	public void setBind(Bind bind) {
+		this.bind = bind;
+	}
+
+	@OneToOne
+    public Person getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Person doctor) {
+		this.doctor = doctor;
+	}
+
+	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @XmlAttribute(name = "id")
     public long getId() {
