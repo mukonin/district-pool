@@ -4,12 +4,15 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.*;
 
 import org.joda.time.DateTime;
 
 import entities.Patient;
 import entities.Person;
+import entities.Role;
 
 public class PersonService {
 	
@@ -24,14 +27,6 @@ public class PersonService {
     	return (ArrayList<Person>) list;
 	}
 	
-	public static void addUser(Person person) {
-		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
-	    EntityManager entitymanager = emfactory.createEntityManager();
-		entitymanager.persist(person);
-    	entitymanager.close();
-    	emfactory.close();
-	}
-	
 	public static void setRole(Person person, String role) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
@@ -41,13 +36,27 @@ public class PersonService {
 	}
 	
 	public static void addDoctor(Person doctor) {
-        addUser(doctor);
-        setRole(doctor, "doctor");
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    entitymanager.getTransaction().begin();    
+	    Role role = (Role) entitymanager.createQuery("SELECT r FROM Role r WHERE r.role LIKE 'doctor'").getSingleResult();
+	    doctor.setRole(role);  
+	    entitymanager.persist(doctor);    
+	    entitymanager.getTransaction().commit();
+		entitymanager.close();
+		emfactory.close();
     }
 
     public static void addPatient(Person patient) {
-        addUser(patient);
-        setRole(patient, "patient");
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    entitymanager.getTransaction().begin();    
+	    Role role = (Role) entitymanager.createQuery("SELECT r FROM Role r WHERE r.role LIKE 'patient'").getSingleResult();
+	    patient.setRole(role);  
+	    entitymanager.persist(patient);    
+	    entitymanager.getTransaction().commit();
+		entitymanager.close();
+		emfactory.close();
     }
     
     public static void deleteUser(Person person) {
@@ -56,9 +65,6 @@ public class PersonService {
 	    entitymanager.getTransaction().begin();
 	    entitymanager.remove(person);
 	    entitymanager.getTransaction().commit();
-	    entitymanager.createQuery("DELETE FROM binds WHERE doctor_id = " + person.getId() + ";").executeUpdate();
-	    entitymanager.createQuery("DELETE FROM binds WHERE patient_id = " + person.getId() + ";").executeUpdate();
-	    entitymanager.createQuery("DELETE FROM roles WHERE id = " + person.getId() + ";").executeUpdate();
     	entitymanager.close();    	
     	emfactory.close();
     }
@@ -86,29 +92,20 @@ public class PersonService {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
     	@SuppressWarnings("unchecked")
-		//List<Person> list = (List<Person>) entitymanager.createQuery("SELECT p FROM Person p JOIN roles ON p.id = roles.id WHERE role = 'doctor';").getResultList();
-		//List<Person> list = (List<Person>) entitymanager.createQuery("SELECT p FROM Person p").getResultList();
-    	ArrayList<Person> list = new ArrayList<>(entitymanager.createQuery("SELECT p FROM Person p").getResultList());
+    	ArrayList<Person> list = new ArrayList<>(entitymanager.createQuery("SELECT r FROM Role r JOIN Person p ON r.id = p.id WHERE r.role LIKE 'doctor'").getResultList());
     	entitymanager.close();
     	emfactory.close();
     	return list;
     }
     
-    public static ArrayList<Patient> getPatients() {
+    public static List<Person> getPatients() {
     	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
     	@SuppressWarnings("unchecked")
-		List<Person> list = (List<Person>) entitymanager.createQuery("SELECT p FROM roles JOIN Person p ON roles.id = users.id WHERE role = 'patient';").getResultList();
-    	ArrayList<Patient> list2 = new ArrayList<>();
-    	for (Person person : list) {
-    		Patient patient = (Patient) person;
-    		Person doctor = getDoctor(person);
-    		patient.setDoctor(doctor);
-    		list2.add(patient);
-    	}    	
+    	ArrayList<Person> list = new ArrayList<>(entitymanager.createQuery("SELECT p FROM Person p").getResultList());
     	entitymanager.close();
     	emfactory.close();
-    	return list2;
+    	return list;
     }
     
     public static ArrayList<Person> getPatients(Person doctor) {

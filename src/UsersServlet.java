@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,8 +37,7 @@ public class UsersServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		ArrayList<Person> list;
-		ArrayList<Patient> list2;
+		List<Person> list;
 		
 		switch (action) {
 		case "doctors" : 
@@ -53,11 +53,11 @@ public class UsersServlet extends HttpServlet {
 			break;
 		case "patients" : 
 			//list2 = dao.DAO.getPatients();
-			list2 = persistence.PersonService.getPatients();
+			list = persistence.PersonService.getPatients();
 			request.setAttribute("pagename", "Patients");
-			request.setAttribute("list", list2);
+			request.setAttribute("list", list);
 			if (request.getParameterMap().containsKey("sort") && request.getParameter("sort").equals("true")) {
-				Collections.sort(list2, utils.PersonUtils.DATA_SORT);
+				Collections.sort(list, utils.PersonUtils.DATA_SORT);
 			}
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);

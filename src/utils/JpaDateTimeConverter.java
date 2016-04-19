@@ -7,6 +7,8 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 @Converter(autoApply=true)
 public class JpaDateTimeConverter  implements AttributeConverter<DateTime, Date>{
@@ -18,8 +20,8 @@ public class JpaDateTimeConverter  implements AttributeConverter<DateTime, Date>
 		
 	@Override
 	public DateTime convertToEntityAttribute(Date date) {
-		return new DateTime(date.getTime());
-		//return utils.PersonUtils.getDateFromString(arg0.toString());
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-mm-dd");
+        return formatter.parseDateTime(date.toString().split(" ")[0]);
 	}
 	
 }
