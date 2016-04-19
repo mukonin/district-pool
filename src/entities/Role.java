@@ -1,18 +1,12 @@
 package entities;
 
 import java.util.Set;
-
-import javax.persistence.*;
-
-@Entity
-@Table(name="roles")
 public class Role {
 	
 	private int id;
 	private String role;
 	Set<Person> persons;
 	
-	@OneToMany(mappedBy="role")
 	public Set<Person> getPersons() {
 		return persons;
 	}
@@ -21,8 +15,6 @@ public class Role {
 		this.persons = persons;
 	}
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}

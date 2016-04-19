@@ -1,51 +1,56 @@
 package entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
-import java.util.TreeSet;
+
+import java.util.Set;
 
 /**
  * @ author Mukonin Oleksandr
  *
  */
+
+@Entity
+@Table(name="doctors")
 public class Doctor implements Comparable<Doctor> {
 
-    private Person doctor = new Person();
-    private TreeSet<Person> patients = new TreeSet<>();
+    private Person person;
+    private Set<Person> patients;
 
-    public Doctor() {
+    @Id
+	public long getId() {
+		return person.getId();
+	}
+
+	public void setId(long id) {
+		this.person.setId(id);
+	}
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public Doctor(Person person) {
-        doctor = person;
-    }
-
-    public void setDoctor(Person doctor) {
-        this.doctor = doctor;
-    }
-
-    @XmlElement
-    public Person getDoctor() {
-        return doctor;
-    }
-
-    @JsonIgnore
+    //@XmlElement
+    @OneToOne
     public Person getPerson() {
-        return doctor;
+        return person;
     }
 
-    @XmlElement(name = "patient")
-    public TreeSet<Person> getPatients() {
+    //@XmlElement(name = "patient")
+    @ManyToOne
+    @JoinColumn(name="id")
+    public Set<Person> getPatients() {
         return patients;
     }
 
-    public void setPatients(TreeSet<Person> patients) {
+    public void setPatients(Set<Person> patients) {
         this.patients = patients;
-    }
-
-    public void addPatient(Person patient) {
-        patients.add(patient);
     }
 
     @Override

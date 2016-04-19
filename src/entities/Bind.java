@@ -10,16 +10,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="binds")
 public class Bind {
 	
 	private Person doctor;
     private long id;
     private Set<Person> patients;
     
-    @Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	public long getId() {
 		return id;
 	}
@@ -28,7 +24,6 @@ public class Bind {
 		this.id = id;
 	}
 
-	@OneToOne
 	public Person getDoctor() {
 		return doctor;
 	}
@@ -37,7 +32,6 @@ public class Bind {
 		this.doctor = doctor;
 	}
 
-	@OneToMany(mappedBy="bind")
 	public Set<Person> getPatients() {
 		return patients;
 	}

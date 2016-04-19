@@ -25,29 +25,20 @@ import utils.*;
 @Entity
 @Table(name="users")
 public class Person implements Comparable<Person> {
+	
     private String firstName;
     private String lastName;
     private DateTime date;
     private long id;
-    private Role role;
-    private Person doctor;
-    private Bind bind;    
-
-    @ManyToOne
-    public Bind getBind() {
-		return bind;
-	}
-
-	public void setBind(Bind bind) {
-		this.bind = bind;
-	}
+    private Doctor doctor;
 
 	@OneToOne
-    public Person getDoctor() {
+	@MapsId
+    public Doctor getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(Person doctor) {
+	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
 
@@ -101,16 +92,8 @@ public class Person implements Comparable<Person> {
 
     @Override
     public String toString() {
-        return lastName + " " + firstName + " (" + date.toString("dd.MM.yyyy") + ")";
+        return firstName + " " + lastName;
+        //return lastName + " " + firstName + " (" + date.toString("dd.MM.yyyy") + ")";
     }
-
-    @ManyToOne
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}    
 	
 }
