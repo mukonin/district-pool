@@ -3,6 +3,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.xml.bind.JAXBException;
 
+import org.joda.time.DateTime;
+
 import dao.DAO;
 import entities.*;
 import io.*;
@@ -22,8 +24,34 @@ import java.util.List;
 public class Tester {
     public static void main(String[] args) throws IOException, JAXBException {
         
+
+    	Person person = new Person();
+    	person.setFirstName("John");
+    	person.setLastName("Smith");
+    	person.setDate(new DateTime(1980, 05, 01, 0, 0));
     	
-    	Hospital hospital;
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    entitymanager.getTransaction().begin();
+	    
+	    Role role = (Role) entitymanager.createQuery("SELECT r FROM Role r WHERE r.role LIKE 'patient'").getSingleResult();
+	    person.setRole(role);
+	    
+	    
+	    entitymanager.persist(person);
+	    
+	    entitymanager.getTransaction().commit();
+	    
+	    
+	    
+	    
+    	entitymanager.close();
+    	emfactory.close();
+    
+    	
+    	
+    	
+    	/*Hospital hospital;
 
        
         HospitalIO io = new TXT();
@@ -42,7 +70,7 @@ public class Tester {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+*/
         //System.out.println(hospital1);
 
 

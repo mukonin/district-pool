@@ -86,10 +86,12 @@ public class PersonService {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
     	@SuppressWarnings("unchecked")
-		List<Person> list = (List<Person>) entitymanager.createQuery("SELECT p FROM roles JOIN Person p ON roles.id = users.id WHERE role = 'doctor';").getResultList();
+		//List<Person> list = (List<Person>) entitymanager.createQuery("SELECT p FROM Person p JOIN roles ON p.id = roles.id WHERE role = 'doctor';").getResultList();
+		//List<Person> list = (List<Person>) entitymanager.createQuery("SELECT p FROM Person p").getResultList();
+    	ArrayList<Person> list = new ArrayList<>(entitymanager.createQuery("SELECT p FROM Person p").getResultList());
     	entitymanager.close();
     	emfactory.close();
-    	return (ArrayList<Person>) list;
+    	return list;
     }
     
     public static ArrayList<Patient> getPatients() {

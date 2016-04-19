@@ -28,27 +28,25 @@ public class Person implements Comparable<Person> {
     private String lastName;
     private DateTime date;
     private long id;
+    private Role role;
 
     @Id
-    @Column(name="id") // not necessary
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @XmlAttribute(name = "id")
     public long getId() {
         return id;
     }
 
-    @Column(name="firstname")
     public String getFirstName() {
         return firstName;
     }
 
-    @Column(name="lastname")
     public String getLastName() {
         return lastName;
     }
 
     @JsonSerialize(using = DateJsonAdapter.class)
     @XmlJavaTypeAdapter(DateXmlAdapter.class)
-    @Column(name="date")
     public DateTime getDate() {
         return date;
     }
@@ -84,4 +82,14 @@ public class Person implements Comparable<Person> {
     public String toString() {
         return lastName + " " + firstName + " (" + date.toString("dd.MM.yyyy") + ")";
     }
+
+    @ManyToOne
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}    
+	
 }

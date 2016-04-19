@@ -8,6 +8,7 @@
 	
    
       <class>entities.Person</class>
+      <class>entities.Role</class>
       <class>utils.JpaDateTimeConverter</class>
       
       <properties>

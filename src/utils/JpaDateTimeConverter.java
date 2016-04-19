@@ -1,5 +1,6 @@
 package utils;
 
+
 import java.util.Date;
 
 import javax.persistence.AttributeConverter;
@@ -11,13 +12,13 @@ import org.joda.time.DateTime;
 public class JpaDateTimeConverter  implements AttributeConverter<DateTime, Date>{
 	
 	@Override
-	public Date convertToDatabaseColumn(DateTime arg0) {	  
-		return arg0.toDate();
+	public Date convertToDatabaseColumn(DateTime dateTime) {	  
+		return dateTime.toDate();
 	}
 		
 	@Override
-	public DateTime convertToEntityAttribute(Date arg0) {
-		return new DateTime(arg0.getTime());
+	public DateTime convertToEntityAttribute(Date date) {
+		return new DateTime(date.getTime());
 		//return utils.PersonUtils.getDateFromString(arg0.toString());
 	}
 	
