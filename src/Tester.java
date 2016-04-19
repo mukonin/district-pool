@@ -6,7 +6,7 @@ import javax.xml.bind.JAXBException;
 import org.joda.time.DateTime;
 
 import dao.DAO;
-import entities.*;
+import entity.*;
 import io.*;
 import persistence.PersonService;
 import utils.PersonUtils;
@@ -33,10 +33,7 @@ public class Tester {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
 	    entitymanager.getTransaction().begin();
-	    
-	    Role role = (Role) entitymanager.createQuery("SELECT r FROM Role r WHERE r.role LIKE 'patient'").getSingleResult();
-	    person.setRole(role);
-	    
+	        
 	    
 	    entitymanager.persist(person);
 	    

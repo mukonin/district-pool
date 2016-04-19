@@ -7,9 +7,8 @@
 	<persistence-unit name="hospital">
 	
    
-      <class>entities.Person</class>
-      <class>entities.Role</class>
-      <class>entities.Bind</class>
+      <class>entity.Person</class>
+      <class>entity.Doctor</class>
       <class>utils.JpaDateTimeConverter</class>
       
       <properties>

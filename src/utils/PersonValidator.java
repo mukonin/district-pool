@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 import org.joda.time.DateTime;
 
-import entities.Person;
+import entity.Person;
 
 public class PersonValidator {
 	

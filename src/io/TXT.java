@@ -2,7 +2,7 @@ package io;
 
 import java.io.*;
 
-import entities.*;
+import entity.*;
 import utils.PersonIOException;
 import utils.PersonUtils;
 

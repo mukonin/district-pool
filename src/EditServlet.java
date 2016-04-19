@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entities.Patient;
-import entities.Person;
+import entity.Patient;
+import entity.Person;
 import utils.PersonUtils;
 import utils.PersonValidator;
 

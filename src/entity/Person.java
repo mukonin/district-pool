@@ -1,27 +1,14 @@
-package entities;
-
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+package entity;
 
 import org.joda.time.DateTime;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import javax.persistence.*;
-
-import utils.*;
 
 /**
  * @ author Mukonin Oleksandr
  *
  */
-@XmlRootElement(name="person")
-@XmlType(propOrder = {"id", "lastName", "firstName", "date"})
-@JsonPropertyOrder({ "id", "lastName", "firstName", "date"})
+
 @Entity
 @Table(name="users")
 public class Person implements Comparable<Person> {
@@ -30,21 +17,18 @@ public class Person implements Comparable<Person> {
     private String lastName;
     private DateTime date;
     private long id;
-    private Doctor doctor;
+    private Person doctor;
 
-	@OneToOne
-	@MapsId
-    public Doctor getDoctor() {
+	public Person getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(Doctor doctor) {
+	public void setDoctor(Person doctor) {
 		this.doctor = doctor;
 	}
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @XmlAttribute(name = "id")
     public long getId() {
         return id;
     }
@@ -57,8 +41,7 @@ public class Person implements Comparable<Person> {
         return lastName;
     }
 
-    @JsonSerialize(using = DateJsonAdapter.class)
-    @XmlJavaTypeAdapter(DateXmlAdapter.class)
+    @Column(columnDefinition = "date")
     public DateTime getDate() {
         return date;
     }
@@ -75,7 +58,6 @@ public class Person implements Comparable<Person> {
         this.lastName = lastName;
     }
 
-    @JsonDeserialize(using = JsonDateAdapter.class)
     public void setDate(DateTime date) {
         this.date = date;
     }
@@ -93,7 +75,6 @@ public class Person implements Comparable<Person> {
     @Override
     public String toString() {
         return firstName + " " + lastName;
-        //return lastName + " " + firstName + " (" + date.toString("dd.MM.yyyy") + ")";
     }
 	
 }

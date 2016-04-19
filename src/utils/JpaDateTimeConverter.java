@@ -20,7 +20,7 @@ public class JpaDateTimeConverter  implements AttributeConverter<DateTime, Date>
 		
 	@Override
 	public DateTime convertToEntityAttribute(Date date) {
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-mm-dd");
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
         return formatter.parseDateTime(date.toString().split(" ")[0]);
 	}
 	

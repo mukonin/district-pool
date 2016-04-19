@@ -2,7 +2,7 @@ package io;
 
 import java.io.IOException;
 
-import entities.Hospital;
+import entity.Hospital;
 
 public interface HospitalIO {
 

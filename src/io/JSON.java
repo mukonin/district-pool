@@ -3,7 +3,7 @@ package io;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import entities.Hospital;
+import entity.Hospital;
 
 import java.io.File;
 import java.io.IOException;

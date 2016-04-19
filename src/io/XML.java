@@ -5,7 +5,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import entities.*;
+import entity.*;
 
 import java.io.File;
 import java.io.IOException;

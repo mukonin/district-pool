@@ -1,13 +1,6 @@
-package entities;
+package entity;
 
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
+import javax.persistence.*;
 
 import java.util.Set;
 
@@ -23,28 +16,19 @@ public class Doctor implements Comparable<Doctor> {
     private Person person;
     private Set<Person> patients;
 
+    @OneToOne
     @Id
-	public long getId() {
-		return person.getId();
-	}
-
-	public void setId(long id) {
-		this.person.setId(id);
-	}
+    @JoinColumn(name="doctor_id")
+    public Person getPerson() {
+        return person;
+    }
 
     public void setPerson(Person person) {
         this.person = person;
     }
 
-    //@XmlElement
-    @OneToOne
-    public Person getPerson() {
-        return person;
-    }
-
-    //@XmlElement(name = "patient")
-    @ManyToOne
-    @JoinColumn(name="id")
+    @ManyToOne(targetEntity=Person.class)
+    @JoinColumn(name="patient_id")
     public Set<Person> getPatients() {
         return patients;
     }
@@ -57,4 +41,11 @@ public class Doctor implements Comparable<Doctor> {
     public int compareTo(Doctor doctor) {
         return this.getPerson().compareTo(doctor.getPerson());
     }
+
+	@Override
+	public String toString() {
+		return person.toString();
+	}
+    
+    
 }

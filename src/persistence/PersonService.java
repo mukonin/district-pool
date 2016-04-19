@@ -10,9 +10,9 @@ import javax.persistence.*;
 
 import org.joda.time.DateTime;
 
-import entities.Patient;
-import entities.Person;
-import entities.Role;
+import entity.Patient;
+import entity.Person;
+import entity.Role;
 
 public class PersonService {
 	
@@ -39,8 +39,8 @@ public class PersonService {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
 	    entitymanager.getTransaction().begin();    
-	    Role role = (Role) entitymanager.createQuery("SELECT r FROM Role r WHERE r.role LIKE 'doctor'").getSingleResult();
-	    doctor.setRole(role);  
+	    //Role role = (Role) entitymanager.createQuery("SELECT r FROM Role r WHERE r.role LIKE 'doctor'").getSingleResult();
+	    //doctor.setRole(role);  
 	    entitymanager.persist(doctor);    
 	    entitymanager.getTransaction().commit();
 		entitymanager.close();
@@ -51,8 +51,8 @@ public class PersonService {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
 	    entitymanager.getTransaction().begin();    
-	    Role role = (Role) entitymanager.createQuery("SELECT r FROM Role r WHERE r.role LIKE 'patient'").getSingleResult();
-	    patient.setRole(role);  
+	    //Role role = (Role) entitymanager.createQuery("SELECT r FROM Role r WHERE r.role LIKE 'patient'").getSingleResult();
+	    //patient.setRole(role);  
 	    entitymanager.persist(patient);    
 	    entitymanager.getTransaction().commit();
 		entitymanager.close();

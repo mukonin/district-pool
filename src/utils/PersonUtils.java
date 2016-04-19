@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import entities.Person;
+import entity.Person;
 
 import java.util.Comparator;
 import java.util.Random;

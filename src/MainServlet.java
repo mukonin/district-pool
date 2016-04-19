@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
 
-import entities.Hospital;
-import entities.Person;
+import entity.Hospital;
+import entity.Person;
 import utils.PersonIOException;
 import utils.PersonUtils;
 

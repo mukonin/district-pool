@@ -2,7 +2,7 @@ package io;
 
 import org.joda.time.DateTime;
 
-import entities.*;
+import entity.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

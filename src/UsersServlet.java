@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.omg.CORBA.DATA_CONVERSION;
 
-import entities.Patient;
-import entities.Person;
+import entity.Patient;
+import entity.Person;
 
 /**
  * Servlet implementation class UserServlet
