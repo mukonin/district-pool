@@ -10,9 +10,8 @@ import javax.persistence.*;
 
 import org.joda.time.DateTime;
 
-import entity.Patient;
+import entity.Doctor;
 import entity.Person;
-import entity.Role;
 
 public class PersonService {
 	
@@ -35,12 +34,12 @@ public class PersonService {
     	emfactory.close();
 	}
 	
-	public static void addDoctor(Person doctor) {
+	public static void addDoctor(Person person) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
-	    entitymanager.getTransaction().begin();    
-	    //Role role = (Role) entitymanager.createQuery("SELECT r FROM Role r WHERE r.role LIKE 'doctor'").getSingleResult();
-	    //doctor.setRole(role);  
+	    entitymanager.getTransaction().begin(); 
+	    Doctor doctor = new Doctor();
+	    doctor.setPerson(person);
 	    entitymanager.persist(doctor);    
 	    entitymanager.getTransaction().commit();
 		entitymanager.close();
