@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.omg.CORBA.DATA_CONVERSION;
 
+import entity.Doctor;
 import entity.Patient;
 import entity.Person;
 
@@ -36,35 +37,25 @@ public class UsersServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String action = request.getParameter("action");
-		List<Person> list;
+		ArrayList<Person> personList = new ArrayList<>();
+		ArrayList<Doctor> doctorList = new ArrayList<>();
 		
 		switch (action) {
-		case "doctors" : 
-			//list = dao.DAO.getDoctors();
-			list = persistence.PersonService.getDoctors(); 
+		case "doctors" :
 			request.setAttribute("pagename", "Doctors");
-			request.setAttribute("list", list);
-			if (request.getParameterMap().containsKey("sort") && request.getParameter("sort").equals("true")) {
-				Collections.sort(list, util.PersonUtils.DATA_SORT);
-			}
-			request.setAttribute("contentpage", "users.jsp");
-			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
 		case "patients" : 
-			//list2 = dao.DAO.getPatients();
-			list = persistence.PersonService.getPatients();
 			request.setAttribute("pagename", "Patients");
-			request.setAttribute("list", list);
-			if (request.getParameterMap().containsKey("sort") && request.getParameter("sort").equals("true")) {
-				Collections.sort(list, util.PersonUtils.DATA_SORT);
-			}
-			request.setAttribute("contentpage", "users.jsp");
-			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;
-		default : request.getRequestDispatcher("index.jsp").forward(request, response);
-		}
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		}	
+		personList = persistence.PersonService.getPersons();
+		doctorList = persistence.PersonService.getDoctors();	
+		request.setAttribute("personList", personList);	
+		request.setAttribute("doctorList", doctorList);
+		request.setAttribute("contentpage", "users.jsp");
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	/**

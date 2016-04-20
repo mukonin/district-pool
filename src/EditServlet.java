@@ -144,37 +144,31 @@ public class EditServlet extends HttpServlet {
 					, request.getParameter("lname"), request.getParameter("date"));
 			if (validator.isValid()) {
 				person = validator.getPerson();
+				if (request.getParameter("id") != null) {
+					person.setId(Long.parseLong(request.getParameter("id")));					
+				}
 				switch (request.getParameter("role")) {
 				case "patient" : 
-					persistence.PersonService.addPatient(person);					
-					/*list = dao.DAO.getDoctors();
-					request.setAttribute("pagename", "Doctors");
-					request.setAttribute("message", "Doctor " + person + " added");	
-					request.setAttribute("list", list);*/
+					request.setAttribute("pagename", "Patients");
+					persistence.PersonService.addPatient(person);
 					break;
 				case "doctor" : 
+					request.setAttribute("pagename", "Doctors");
 					Doctor doctor = new Doctor();
 					doctor.setPerson(person);
-					persistence.PersonService.addDoctor(doctor);					
-					/*dao.DAO.addPatient(person);
-					list2 = dao.DAO.getPatients();
-					request.setAttribute("pagename", "Patients");
-					request.setAttribute("message", "Patient " + person + " added");	
-					request.setAttribute("list", list2);*/
+					persistence.PersonService.addDoctor(doctor);	
 					break;
 				};
 				personList = persistence.PersonService.getPersons();
-				doctorList = persistence.PersonService.getDoctors();
+				doctorList = persistence.PersonService.getDoctors();	
+				request.setAttribute("personList", personList);	
+				request.setAttribute("doctorList", doctorList);
 				request.setAttribute("role", request.getParameter("role"));
 				request.setAttribute("contentpage", "users.jsp");				
 			} else {
 				request.setAttribute("message", "Error updating to DB, error message " + validator.getErrorMessage());
-				request.setAttribute("fname", request.getParameter("fname"));
-				request.setAttribute("lname", request.getParameter("lname"));
-				request.setAttribute("date", request.getParameter("date"));
-				request.setAttribute("contentpage", "edituser.jsp");		
-			}
-			
+				request.setAttribute("contentpage", "adduser.jsp");		
+			}			
 			request.getRequestDispatcher("index.jsp").forward(request, response);		
 			break;
 		

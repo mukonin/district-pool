@@ -15,34 +15,7 @@ import entity.Person;
 
 public class PersonService {
 	
-    
-	public static ArrayList<Person> getPersons() {
-		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
-	    EntityManager entitymanager = emfactory.createEntityManager();
-    	@SuppressWarnings("unchecked")
-		List<Person> list = (List<Person>) entitymanager.createQuery("SELECT p FROM Person p").getResultList();
-    	entitymanager.close();
-    	emfactory.close();
-    	return (ArrayList<Person>) list;
-	}
-	
-	public static void setRole(Person person, String role) {
-		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
-	    EntityManager entitymanager = emfactory.createEntityManager();
-	    entitymanager.createQuery("INSERT INTO roles (id, role) VALUES ('" + person.getId() + "','" + role + "');").executeUpdate();
-    	entitymanager.close();
-    	emfactory.close();
-	}
-	
-	public static void addDoctor(Doctor doctor) {
-		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
-	    EntityManager entitymanager = emfactory.createEntityManager();
-	    entitymanager.getTransaction().begin(); 
-	    entitymanager.merge(doctor);    
-	    entitymanager.getTransaction().commit();
-		entitymanager.close();
-		emfactory.close();
-    }
+	// create/update
 
     public static void addPatient(Person patient) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
@@ -53,18 +26,20 @@ public class PersonService {
 		entitymanager.close();
 		emfactory.close();
     }
-    
-    public static void deleteUser(Person person) {
+	
+	public static void addDoctor(Doctor doctor) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
-	    entitymanager.getTransaction().begin();
-	    entitymanager.remove(person);
+	    entitymanager.getTransaction().begin(); 
+	    entitymanager.merge(doctor);    
 	    entitymanager.getTransaction().commit();
-    	entitymanager.close();    	
-    	emfactory.close();
+		entitymanager.close();
+		emfactory.close();
     }
 	
-    public static Person getById(Long id) {
+	// read
+	
+    public static Person getPersonById(Long id) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
 	    entitymanager.getTransaction().begin();
@@ -73,15 +48,40 @@ public class PersonService {
     	emfactory.close();
         return person;
     }
-    
-    public static Person getDoctor(Person patient) {
+	
+    public static Doctor getDoctorById(Long id) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
-	    Person doctor = (Person) entitymanager.createQuery("SELECT p FROM binds JOIN Person p ON binds.doctor_id = users.id WHERE binds.patient_id = '" + patient.getId() + "';").getSingleResult();
+	    entitymanager.getTransaction().begin();
+	    Doctor doctor = entitymanager.find(Doctor.class, id);
     	entitymanager.close();    	
     	emfactory.close();
-	    return doctor;
+        return doctor;
     }
+    
+    // delete
+    
+    public static void deletePerson(Person person) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    entitymanager.getTransaction().begin();
+	    entitymanager.remove(person);
+	    entitymanager.getTransaction().commit();
+    	entitymanager.close();    	
+    	emfactory.close();
+    }
+    
+    public static void deletePerson(Doctor doctor) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    entitymanager.getTransaction().begin();
+	    entitymanager.remove(doctor);
+	    entitymanager.getTransaction().commit();
+    	entitymanager.close();    	
+    	emfactory.close();
+    }
+    
+    // read collections
     
     public static ArrayList<Doctor> getDoctors() {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
@@ -101,6 +101,35 @@ public class PersonService {
     	entitymanager.close();
     	emfactory.close();
     	return list;
+    }
+    
+    // not usable more	
+    
+	public static ArrayList<Person> getPersons() {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+    	@SuppressWarnings("unchecked")
+    	ArrayList<Person> list = new ArrayList<>(entitymanager.createQuery("SELECT p FROM Person p").getResultList());
+    	entitymanager.close();
+    	emfactory.close();
+    	return list;
+	}
+	
+	public static void setRole(Person person, String role) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    entitymanager.createQuery("INSERT INTO roles (id, role) VALUES ('" + person.getId() + "','" + role + "');").executeUpdate();
+    	entitymanager.close();
+    	emfactory.close();
+	}
+    
+    public static Person getDoctor(Person patient) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    Person doctor = (Person) entitymanager.createQuery("SELECT p FROM binds JOIN Person p ON binds.doctor_id = users.id WHERE binds.patient_id = '" + patient.getId() + "';").getSingleResult();
+    	entitymanager.close();    	
+    	emfactory.close();
+	    return doctor;
     }
     
     public static ArrayList<Person> getPatients(Person doctor) {

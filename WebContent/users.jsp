@@ -24,7 +24,7 @@
 					</tr>
 				</thead>
 		    	<tbody>
-		    		<c:forEach var="user" items="${list}">
+		    		<c:forEach var="user" items="${patientList}">
 					<tr>
 						<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${user.id}'">${user.firstName}</td>
 						<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${user.id}'">${user.lastName}</td>

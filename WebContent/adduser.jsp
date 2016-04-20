@@ -5,7 +5,14 @@
 <div class="container col-md-12">
 	<div class="panel panel-default">
   		<div class="panel-heading">
-  			<h4>Add new user</h4>
+  			<h4>
+  				<c:if test="${not empty user.id}">
+  					Edit user ${user}
+  				</c:if>
+  				<c:if test="${empty user.id}">
+  					Add user
+  				</c:if>
+  			</h4>
   		</div>
   		<div class="panel-body">
   			<p class="validateTips">All form fields are required.</p>
@@ -13,30 +20,32 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="fname">First Name:</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="fname" id="fname" placeholder="Enter First Name" value="">
+						<input type="text" class="form-control" name="fname" id="fname" placeholder="Enter First Name" value="${user.firstName }">
 		      		</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="lname">Last Name:</label>
 					<div class="col-sm-10">          
-						<input type="text" class="form-control" name="lname" id="lname" placeholder="Enter Last Name" value="">
+						<input type="text" class="form-control" name="lname" id="lname" placeholder="Enter Last Name" value="${user.lastName }">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="date">Date of Birth:</label>
 					<div class="col-sm-10">          
-						<input type="text" name="date" class="form-control" id="datepicker" data-date-format="mm.dd.yyyy" placeholder="dd.mm.yyyy" >
+						<input type="text" class="form-control" name="date" id="datepicker" data-date-format="mm.dd.yyyy" placeholder="dd.mm.yyyy" value="<joda:format value="${user.date}" pattern="dd.MM.yyyy"/>">
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="lname">Role:</label>
-					<div class="col-sm-10  text-left">          
-						<select name="role" class="form-control">   
-							<option selected value="pat">Patient</option>
-							<option value="doc">Doctor</option>
-						</select>
+				<c:if test="${empty user.id}">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="lname">Role:</label>
+						<div class="col-sm-10  text-left">          
+							<select name="role" class="form-control">   
+								<option selected value="pat">Patient</option>
+								<option value="doc">Doctor</option>
+							</select>
+						</div>
 					</div>
-				</div>
+				</c:if>
 				<div class="form-group text-left">        
 					<div class="col-sm-offset-2 col-sm-10">
 						<input type = "hidden" name = "id" value = "${user.id}"/>
