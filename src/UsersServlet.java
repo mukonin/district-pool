@@ -2,9 +2,7 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,30 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.omg.CORBA.DATA_CONVERSION;
-
 import entity.Doctor;
-import entity.Patient;
 import entity.Person;
 
 /**
- * Servlet implementation class UserServlet
+ * @ author Mukonin Oleksandr
+ * 
  */
 @WebServlet("/UsersServlet")
 public class UsersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public UsersServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
@@ -45,24 +34,23 @@ public class UsersServlet extends HttpServlet {
 		switch (action) {
 		case "doctors" :
 			request.setAttribute("pagename", "Doctors");
+			doctorList = persistence.PersonService.getDoctors();
+			Collections.sort(doctorList);
+			request.setAttribute("doctorList", doctorList);
 			break;
 		case "patients" : 
 			request.setAttribute("pagename", "Patients");
+			personList = persistence.PersonService.getPersons();
+			Collections.sort(personList);
+			request.setAttribute("personList", personList);	
 			break;
-		}	
-		personList = persistence.PersonService.getPersons();
-		doctorList = persistence.PersonService.getDoctors();	
-		request.setAttribute("personList", personList);	
-		request.setAttribute("doctorList", doctorList);
+		}		
 		request.setAttribute("contentpage", "users.jsp");
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		doGet(request, response);
 	}
 

@@ -63,19 +63,22 @@ public class PersonValidator {
     	valid = true;
     	if ( ! patternName.matcher(firstName).matches()) {
     		valid = false;
-    		builder.append("wrong first name format ");
+    		builder.append("wrong first name format");
     	};
     	if ( ! patternName.matcher(lastName).matches()) {
+    		if (! valid) builder.append(", ");
     		valid = false;
-    		builder.append("wrong last name format ");
+    		builder.append("wrong last name format");
     	};
     	try {
     		date = util.PersonUtils.getDateFromString(dateString);
     		if (date.isAfter(new DateTime().getMillis())) {
+        		if (! valid) builder.append(", ");
         		valid = false;
-        		builder.append("wrong date (after today) ");
+        		builder.append("wrong date (after today)");
         	}
     	} catch (Exception e) {
+    		if (! valid) builder.append(", ");
     		valid = false;
     		builder.append("error converting date");
     	}

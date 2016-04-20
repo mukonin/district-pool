@@ -12,8 +12,7 @@
 			<table class="table table-striped text-left">
 				<thead>
 					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
+						<th>Name</th>
 						<th>Date of Birth</th>
 						<c:if test="${pagename == 'Patients'}">
 							<th>Doctor</th>
@@ -23,11 +22,11 @@
 						<th></th>
 					</tr>
 				</thead>
+				
 		    	<tbody>
-		    		<c:forEach var="user" items="${patientList}">
+		    		<c:forEach var="user" items="${doctorList}">
 					<tr>
-						<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${user.id}'">${user.firstName}</td>
-						<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${user.id}'">${user.lastName}</td>
+						<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${user.id}'">${user.lastName}, ${user.firstName}</td>
 						<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${user.id}'"><joda:format pattern="dd.MM.yyyy" value="${user.date}"/></td>
 						<c:if test="${pagename == 'Patients'}">
 							<c:if test="${not empty user.doctor}">
@@ -72,6 +71,7 @@
 					</tr>
 					</c:forEach>
 				</tbody>
+				
 			</table>
 		</div>
 	</div>

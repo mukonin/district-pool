@@ -11,7 +11,7 @@ $(document).ready(function () {
 	    $(".alert").fadeTo(1500, 0).slideUp(500, function(){
 	        $(this).remove(); 
 	    });
-	}, 3000);
+	}, 5000);
 });
 
 $(function() {
