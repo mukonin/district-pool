@@ -17,13 +17,13 @@ public class Person implements Comparable<Person> {
     private String lastName;
     private DateTime date;
     private long id;
-    private Person doctor;
+    private Doctor doctor;
 
-	public Person getDoctor() {
+	public Doctor getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(Person doctor) {
+	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
 

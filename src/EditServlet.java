@@ -70,10 +70,9 @@ public class EditServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		ArrayList<Person> personList = new ArrayList<>();
 		ArrayList<Doctor> doctorList = new ArrayList<>();
-		Person patient;
+		Doctor doctor;
 		Person person;
 		Long id;
-		Random random;
 		String role;
 		Person person1;
 		Person person2;
@@ -154,7 +153,7 @@ public class EditServlet extends HttpServlet {
 					break;
 				case "doctor" : 
 					request.setAttribute("pagename", "Doctors");
-					Doctor doctor = new Doctor();
+					doctor = new Doctor();
 					doctor.setPerson(person);
 					persistence.PersonService.addDoctor(doctor);	
 					break;
@@ -175,29 +174,26 @@ public class EditServlet extends HttpServlet {
 		// link doctor patient
 		
 		case "link" : 
-			person1 = dao.DAO.getById(Long.parseLong(request.getParameter("id1")));
-			person2 = dao.DAO.getById(Long.parseLong(request.getParameter("id2")));
-			dao.DAO.unlinkDoctorPatient(person1, person2);
-			if (dao.DAO.isDoctor(person1)) {
-				dao.DAO.linkDoctorPatient(person1, person2);
-			} else {
-				dao.DAO.linkDoctorPatient(person2, person1);
-			}
+			person = persistence.PersonService.getPersonById(Long.parseLong(request.getParameter("id1")));
+			doctor = persistence.PersonService.getDoctorById(Long.parseLong(request.getParameter("id2")));
+			person.getDoctor().getPatients().remove(person); // ?? is these operation necessary
+			doctor.getPatients().add(person);
+			persistence.PersonService.updateDoctor(doctor);
+			persistence.PersonService.updatePatient(person);
 			request.setAttribute("message", "Linked");
-			request.setAttribute("user", person1);
-			request.setAttribute("contentpage", "user.jsp");
 			request.getRequestDispatcher("UserServlet?id=" + request.getParameter("id1")).forward(request, response);
 			break;
 			
 		// unlink doctor and patient
 		
 		case "unlink" : 
-			person1 = dao.DAO.getById(Long.parseLong(request.getParameter("id1")));
-			person2 = dao.DAO.getById(Long.parseLong(request.getParameter("id2")));
-			dao.DAO.unlinkDoctorPatient(person1, person2);
+			person = persistence.PersonService.getPersonById(Long.parseLong(request.getParameter("id1")));
+			doctor = persistence.PersonService.getDoctorById(Long.parseLong(request.getParameter("id2")));
+			person.getDoctor().getPatients().remove(person); // ?? is these operation necessary
+			doctor.getPatients().add(person);
+			persistence.PersonService.updateDoctor(doctor);
+			persistence.PersonService.updatePatient(person);
 			request.setAttribute("message", "Unlinked");
-			request.setAttribute("user", person1);
-			request.setAttribute("contentpage", "user.jsp");
 			request.getRequestDispatcher("UserServlet?id=" + request.getParameter("id1")).forward(request, response);	
 			break;
 			

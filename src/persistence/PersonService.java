@@ -1,14 +1,8 @@
 package persistence;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.*;
-
-import org.joda.time.DateTime;
 
 import entity.Doctor;
 import entity.Person;
@@ -59,6 +53,16 @@ public class PersonService {
         return doctor;
     }
     
+    // update
+    
+    public static void updatePatient(Person patient) {
+    	addPatient(patient);
+    }
+    
+    public static void updateDoctor(Doctor doctor) {
+    	addDoctor(doctor);
+    }
+    
     // delete
     
     public static void deletePerson(Person person) {
@@ -103,7 +107,7 @@ public class PersonService {
     	return list;
     }
     
-    // not usable more	
+    // not usable anymore	
     
 	public static ArrayList<Person> getPersons() {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
