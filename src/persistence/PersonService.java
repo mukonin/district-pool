@@ -36,7 +36,6 @@ public class PersonService {
     public static Person getPersonById(Long id) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
-	    entitymanager.getTransaction().begin();
 	    Person person = entitymanager.find(Person.class, id);
     	entitymanager.close();    	
     	emfactory.close();
@@ -46,7 +45,6 @@ public class PersonService {
     public static Doctor getDoctorById(Long id) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
-	    entitymanager.getTransaction().begin();
 	    Doctor doctor = entitymanager.find(Doctor.class, id);
     	entitymanager.close();    	
     	emfactory.close();
@@ -101,10 +99,22 @@ public class PersonService {
     	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
     	@SuppressWarnings("unchecked")
-    	ArrayList<Person> list = new ArrayList<>(entitymanager.createQuery("SELECT p FROM Person p").getResultList());
+    	ArrayList<Person> list = new ArrayList<>(entitymanager.createQuery("SELECT p FROM Person p WHERE p.id NOT IN ( SELECT d.person.id FROM Doctor d )").getResultList());
     	entitymanager.close();
     	emfactory.close();
     	return list;
+    }
+    
+    // utils
+    
+    public static String getRoleById (Long id) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
+	    EntityManager entitymanager = emfactory.createEntityManager();
+	    Doctor doctor = entitymanager.find(Doctor.class, id);
+    	entitymanager.close();    	
+    	emfactory.close();    	
+	    if (doctor != null) return "doctor";
+	    return "patient";
     }
     
     // not usable anymore	

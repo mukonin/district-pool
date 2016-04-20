@@ -37,15 +37,16 @@ public class UsersServlet extends HttpServlet {
 			doctorList = persistence.PersonService.getDoctors();
 			Collections.sort(doctorList);
 			request.setAttribute("doctorList", doctorList);
+			request.setAttribute("contentpage", "doctors.jsp");
 			break;
 		case "patients" : 
 			request.setAttribute("pagename", "Patients");
 			personList = persistence.PersonService.getPersons();
 			Collections.sort(personList);
 			request.setAttribute("personList", personList);	
+			request.setAttribute("contentpage", "patients.jsp");
 			break;
 		}		
-		request.setAttribute("contentpage", "users.jsp");
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 

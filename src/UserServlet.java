@@ -25,14 +25,19 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Long id = Long.parseLong(request.getParameter("id"));
-		Person person = dao.DAO.getById(id);
+		Person person = persistence.PersonService.getPersonById(id);
 		request.setAttribute("user", person);
-		request.setAttribute("role", dao.DAO.getRole(person));		
-		Person doctor = dao.DAO.getDoctor(person);
-		request.setAttribute("doctor", doctor);		
-		ArrayList<Person> list = dao.DAO.getPatients(person);
-		request.setAttribute("list", list);
-		request.setAttribute("contentpage", "user.jsp");
+		
+		switch (persistence.PersonService.getRoleById(id)) {
+		case "patient" :
+			
+			request.setAttribute("contentpage", "patient.jsp");
+			break;
+		case "doctor" :
+			
+			request.setAttribute("contentpage", "doctor.jsp");
+			break;			
+		}
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
