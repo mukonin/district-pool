@@ -9,7 +9,7 @@
    
       <class>entity.Person</class>
       <class>entity.Doctor</class>
-      <class>utils.JpaDateTimeConverter</class>
+      <class>util.JpaDateTimeConverter</class>
       
       <properties>
          <property name="javax.persistence.jdbc.url" value="jdbc:mysql://91.209.24.68:43306/hospital?useSSL=false"/>

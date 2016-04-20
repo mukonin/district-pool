@@ -15,8 +15,8 @@ import org.joda.time.DateTime;
 
 import entity.Hospital;
 import entity.Person;
-import utils.PersonIOException;
-import utils.PersonUtils;
+import util.PersonIOException;
+import util.PersonUtils;
 
 /**
  * Servlet implementation class MainServlet

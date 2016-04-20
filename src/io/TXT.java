@@ -3,8 +3,8 @@ package io;
 import java.io.*;
 
 import entity.*;
-import utils.PersonIOException;
-import utils.PersonUtils;
+import util.PersonIOException;
+import util.PersonUtils;
 
 /**
  * @ author Mukonin Oleksandr

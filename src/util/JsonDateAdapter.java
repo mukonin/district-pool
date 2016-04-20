@@ -1,4 +1,4 @@
-package utils;
+package util;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

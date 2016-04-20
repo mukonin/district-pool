@@ -1,6 +1,5 @@
-package utils;
+package util;
 
-import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.joda.time.DateTime;
@@ -9,16 +8,14 @@ import entity.Person;
 
 public class PersonValidator {
 	
-	public PersonValidator(String firstName, String lastName, DateTime date) {
+	public PersonValidator(String firstName, String lastName, String dateString) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.date = date;
+		this.dateString = dateString;
 		person = null;
 		validate();
-		if (valid) {
-			Random random = new Random();
+		if (valid) {			
 			person = new Person();
-			person.setId((long) (random.nextDouble() * 9000000000L) + 1000000000L);
 			person.setDate(date);
 			person.setFirstName(firstName);
 			person.setLastName(lastName);
@@ -28,10 +25,11 @@ public class PersonValidator {
 	private Person person;
 	private String firstName;
 	private String lastName;
+	private String dateString;
     private DateTime date;
     
     private String errorMessage;
-    private boolean valid;
+    private boolean valid = false;
     
     private static final String personNameRexExp = "[A-Z][a-z]+";
     private static final Pattern patternName = Pattern.compile(personNameRexExp);
@@ -71,9 +69,15 @@ public class PersonValidator {
     		valid = false;
     		builder.append("wrong last name format ");
     	};
-    	if (date.isAfter(new DateTime().getMillis())) {
+    	try {
+    		date = util.PersonUtils.getDateFromString(dateString);
+    		if (date.isAfter(new DateTime().getMillis())) {
+        		valid = false;
+        		builder.append("wrong date (after today) ");
+        	}
+    	} catch (Exception e) {
     		valid = false;
-    		builder.append("wrong date (after today) ");
+    		builder.append("error converting date");
     	}
     	errorMessage = builder.toString();
     }	

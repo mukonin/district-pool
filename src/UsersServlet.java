@@ -46,7 +46,7 @@ public class UsersServlet extends HttpServlet {
 			request.setAttribute("pagename", "Doctors");
 			request.setAttribute("list", list);
 			if (request.getParameterMap().containsKey("sort") && request.getParameter("sort").equals("true")) {
-				Collections.sort(list, utils.PersonUtils.DATA_SORT);
+				Collections.sort(list, util.PersonUtils.DATA_SORT);
 			}
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -57,7 +57,7 @@ public class UsersServlet extends HttpServlet {
 			request.setAttribute("pagename", "Patients");
 			request.setAttribute("list", list);
 			if (request.getParameterMap().containsKey("sort") && request.getParameter("sort").equals("true")) {
-				Collections.sort(list, utils.PersonUtils.DATA_SORT);
+				Collections.sort(list, util.PersonUtils.DATA_SORT);
 			}
 			request.setAttribute("contentpage", "users.jsp");
 			request.getRequestDispatcher("index.jsp").forward(request, response);

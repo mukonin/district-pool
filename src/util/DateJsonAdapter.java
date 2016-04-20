@@ -1,4 +1,4 @@
-package utils;
+package util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

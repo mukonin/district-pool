@@ -34,13 +34,11 @@ public class PersonService {
     	emfactory.close();
 	}
 	
-	public static void addDoctor(Person person) {
+	public static void addDoctor(Doctor doctor) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
 	    entitymanager.getTransaction().begin(); 
-	    Doctor doctor = new Doctor();
-	    doctor.setPerson(person);
-	    entitymanager.persist(doctor);    
+	    entitymanager.merge(doctor);    
 	    entitymanager.getTransaction().commit();
 		entitymanager.close();
 		emfactory.close();
@@ -49,10 +47,8 @@ public class PersonService {
     public static void addPatient(Person patient) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
-	    entitymanager.getTransaction().begin();    
-	    //Role role = (Role) entitymanager.createQuery("SELECT r FROM Role r WHERE r.role LIKE 'patient'").getSingleResult();
-	    //patient.setRole(role);  
-	    entitymanager.persist(patient);    
+	    entitymanager.getTransaction().begin();
+	    entitymanager.merge(patient);    
 	    entitymanager.getTransaction().commit();
 		entitymanager.close();
 		emfactory.close();
@@ -87,11 +83,11 @@ public class PersonService {
 	    return doctor;
     }
     
-    public static ArrayList<Person> getDoctors() {
+    public static ArrayList<Doctor> getDoctors() {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
     	@SuppressWarnings("unchecked")
-    	ArrayList<Person> list = new ArrayList<>(entitymanager.createQuery("SELECT r FROM Role r JOIN Person p ON r.id = p.id WHERE r.role LIKE 'doctor'").getResultList());
+    	ArrayList<Doctor> list = new ArrayList<>(entitymanager.createQuery("SELECT d FROM Doctor d").getResultList());
     	entitymanager.close();
     	emfactory.close();
     	return list;
