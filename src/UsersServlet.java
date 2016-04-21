@@ -41,7 +41,7 @@ public class UsersServlet extends HttpServlet {
 			break;
 		case "patients" : 
 			request.setAttribute("pagename", "Patients");
-			personList = persistence.PersonService.getPersons();
+			personList = persistence.PersonService.getPatients();
 			Collections.sort(personList);
 			request.setAttribute("personList", personList);	
 			request.setAttribute("contentpage", "patients.jsp");

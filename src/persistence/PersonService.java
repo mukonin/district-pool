@@ -73,7 +73,7 @@ public class PersonService {
     	emfactory.close();
     }
     
-    public static void deletePerson(Doctor doctor) {
+    public static void deleteDoctor(Doctor doctor) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
 	    entitymanager.getTransaction().begin();
@@ -95,11 +95,12 @@ public class PersonService {
     	return list;
     }
     
-    public static List<Person> getPatients() {
+    public static ArrayList<Person> getPatients() {
     	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
     	@SuppressWarnings("unchecked")
     	ArrayList<Person> list = new ArrayList<>(entitymanager.createQuery("SELECT p FROM Person p WHERE p.id NOT IN ( SELECT d.person.id FROM Doctor d )").getResultList());
+    	System.out.println(list);
     	entitymanager.close();
     	emfactory.close();
     	return list;
@@ -119,7 +120,7 @@ public class PersonService {
     
     // not usable anymore	
     
-	public static ArrayList<Person> getPersons() {
+	/*public static ArrayList<Person> getPersons() {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
     	@SuppressWarnings("unchecked")
@@ -127,7 +128,7 @@ public class PersonService {
     	entitymanager.close();
     	emfactory.close();
     	return list;
-	}
+	}*/
 	
 	public static void setRole(Person person, String role) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );

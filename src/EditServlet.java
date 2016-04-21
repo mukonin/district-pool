@@ -2,7 +2,10 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
 
 import entity.Doctor;
-import entity.Patient;
 import entity.Person;
 import util.PersonUtils;
 import util.PersonValidator;
@@ -72,6 +74,7 @@ public class EditServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		ArrayList<Person> personList = new ArrayList<>();
 		ArrayList<Doctor> doctorList = new ArrayList<>();
+		ArrayList<Person> list = new ArrayList<>();
 		Doctor doctor;
 		Person person;
 		Long id;
@@ -152,12 +155,14 @@ public class EditServlet extends HttpServlet {
 				switch (request.getParameter("role")) {
 				case "patient" : 
 					persistence.PersonService.addPatient(person);
+					request.setAttribute("message", "Patient " + person + " added");	
 					request.getRequestDispatcher("UsersServlet?action=patients").forward(request, response);
 					break;
 				case "doctor" : 
 					doctor = new Doctor();
 					doctor.setPerson(person);
 					persistence.PersonService.addDoctor(doctor);
+					request.setAttribute("message", "Doctor " + person + " added");	
 					request.getRequestDispatcher("UsersServlet?action=doctors").forward(request, response);
 					break;
 				};		
@@ -172,14 +177,22 @@ public class EditServlet extends HttpServlet {
 		
 		// link doctor patient
 		
-		case "link" : 
-			person = persistence.PersonService.getPersonById(Long.parseLong(request.getParameter("id1")));
-			doctor = persistence.PersonService.getDoctorById(Long.parseLong(request.getParameter("id2")));
-			person.getDoctor().getPatients().remove(person); // ?? is these operation necessary
-			doctor.getPatients().add(person);
-			persistence.PersonService.updateDoctor(doctor);
+		case "link" :
+			
+			person = persistence.PersonService.getPersonById(Long.parseLong(request.getParameter("id2")));
+			person.setDoctor(null);
 			persistence.PersonService.updatePatient(person);
-			request.setAttribute("message", "Linked");
+			doctor = persistence.PersonService.getDoctorById(Long.parseLong(request.getParameter("id1")));
+			//doctor.getPatients().add(person);
+			//doctor.addPatient(person);
+			
+			//persistence.PersonService.updateDoctor(doctor);
+			
+			
+			//person.getDoctor().getPatients().remove(person); // ?? is these operation necessary
+			
+			//persistence.PersonService.updatePatient(person);
+			request.setAttribute("message", "Patient " + person + " added to doctor " + doctor + " list");
 			request.getRequestDispatcher("UserServlet?id=" + request.getParameter("id1")).forward(request, response);
 			break;
 			
@@ -198,24 +211,26 @@ public class EditServlet extends HttpServlet {
 			
 		// show linkage page
 			
-		case "linkpage" : 
-			/*person1 = dao.DAO.getById(Long.parseLong(request.getParameter("id1")));
-			request.setAttribute("user", person1);
-			switch (dao.DAO.getRole(person1)) {
-			case "doctor" :
-				list2 = dao.DAO.getPatients();
-				request.setAttribute("role", "doctor");
-				request.setAttribute("list", list2);
-				break;
+		case "linkpage" :			
+			id = Long.parseLong(request.getParameter("id"));
+			request.setAttribute("role", persistence.PersonService.getRoleById(id));	
+			person = persistence.PersonService.getPersonById(id);
+			request.setAttribute("user", person);	
+			switch (persistence.PersonService.getRoleById(id)) {
 			case "patient" :
-				request.setAttribute("role", "patient");
-				list = dao.DAO.getDoctors();
-				request.setAttribute("list", list);
-				break;				
-			};
+				doctorList = persistence.PersonService.getDoctors();
+				Collections.sort(doctorList);
+				request.setAttribute("list", doctorList);
+				break;
+			case "doctor" :
+				personList = persistence.PersonService.getPatients();
+				Collections.sort(personList);
+				request.setAttribute("list", personList);	
+				break;			
+			}
 			request.setAttribute("contentpage", "linkpage.jsp");
-			request.getRequestDispatcher("index.jsp").forward(request, response);	*/	
-			break;			
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			break;
 			
 		//default : request.getRequestDispatcher("index.jsp").forward(request, response);
 		}

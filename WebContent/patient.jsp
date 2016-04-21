@@ -27,7 +27,7 @@
 					Doctor: none
 					<br>	
 					<form action="/hospital/EditServlet" method="post">						
-						<input type = "hidden" name = "id1" value = "${user.id}"/>
+						<input type = "hidden" name = "id" value = "${user.id}"/>
 						<button type="submit" value="linkpage" name="action" class="btn btn-md btn-warning" data-toggle="tooltip" title="Link to doctor">
   							<span class="glyphicon glyphicon-link" aria-hidden="true"></span>
 						</button>

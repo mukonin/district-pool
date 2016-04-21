@@ -2,6 +2,7 @@ package entity;
 
 import javax.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Set;
 public class Doctor implements Comparable<Doctor> {
 
     private Person person;
-    private Set<Person> patients;
+    private HashSet<Person> patients = new HashSet<Person>();
 
     @OneToOne
     @Id
@@ -29,11 +30,11 @@ public class Doctor implements Comparable<Doctor> {
 
     @ManyToOne(targetEntity=Person.class)
     @JoinColumn(name="patient_id")
-    public Set<Person> getPatients() {
+    public HashSet<Person> getPatients() {
         return patients;
     }
 
-    public void setPatients(Set<Person> patients) {
+    public void setPatients(HashSet<Person> patients) {
         this.patients = patients;
     }
 
@@ -46,6 +47,5 @@ public class Doctor implements Comparable<Doctor> {
 	public String toString() {
 		return person.toString();
 	}
-    
     
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entity.Doctor;
 import entity.Person;
 
 /**
@@ -25,16 +26,16 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Long id = Long.parseLong(request.getParameter("id"));
-		Person person = persistence.PersonService.getPersonById(id);
-		request.setAttribute("user", person);
 		
 		switch (persistence.PersonService.getRoleById(id)) {
 		case "patient" :
-			
+			Person person = persistence.PersonService.getPersonById(id);
+			request.setAttribute("user", person);
 			request.setAttribute("contentpage", "patient.jsp");
 			break;
 		case "doctor" :
-			
+			Doctor doctor = persistence.PersonService.getDoctorById(id);
+			request.setAttribute("doctor", doctor);
 			request.setAttribute("contentpage", "doctor.jsp");
 			break;			
 		}
