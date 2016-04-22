@@ -40,11 +40,27 @@ public class EditServlet extends HttpServlet {
 			
 			//show edit user window
 			
-		case "edit" : //person = dao.DAO.getById(Long.parseLong(request.getParameter("id")));
-			//request.setAttribute("pagename", "Edit User Data: " + person);
-			//request.setAttribute("user", person);
+		case "edit" : 
+			Long id = Long.parseLong(request.getParameter("id"));
+			
+			switch (persistence.PersonService.getRoleById(id)) {
+			
+			case "patient" :				
+				Patient patient = persistence.PersonService.getPatientById(id);
+				request.setAttribute("pagename", "Edit patient " + patient + " information ");
+				request.setAttribute("user", patient);
+				break;
+				
+			case "doctor" : 				
+				Doctor doctor = persistence.PersonService.getDoctorById(id);
+				request.setAttribute("pagename", "Edit doctor " + doctor + " information ");
+				request.setAttribute("user", doctor);				
+				break;
+			};		
+			
 			request.setAttribute("contentpage", "edituser.jsp");	
 			request.getRequestDispatcher("index.jsp").forward(request, response);
+			
 			break;	
 		};
 		
@@ -60,6 +76,7 @@ public class EditServlet extends HttpServlet {
 		Patient patient;	
 		Person person;
 		Long id;
+		PersonValidator validator;
 		
 		switch (action) {
 		
@@ -100,7 +117,45 @@ public class EditServlet extends HttpServlet {
 			
 		// update user info
 			
-		case "update" : /*PersonValidator validator = new PersonValidator(request.getParameter("fname"), 
+		case "update" :
+			
+			id = Long.parseLong(request.getParameter("id"));
+			
+			validator = new PersonValidator(request.getParameter("fname")
+					, request.getParameter("lname"), request.getParameter("date"));
+			
+			if (validator.isValid()) {
+				person = validator.getPerson();
+				person.setId(id);
+				
+				switch (persistence.PersonService.getRoleById(id)) {
+				
+				case "patient" :
+					patient = new Patient(person);
+					persistence.PersonService.updatePatient(patient);
+					request.setAttribute("message", "Patient " + patient + " information updated");	
+					break;
+					
+				case "doctor" : 
+					doctor = new Doctor(person);
+					persistence.PersonService.updateDoctor(doctor);
+					request.setAttribute("message", "Doctor " + doctor + " information updated");	
+					break;					
+				};		
+				
+				request.getRequestDispatcher("UserServlet?id=" + id).forward(request, response);
+				
+			} else {
+				request.setAttribute("message", "Error adding to DB, error message:\n " + validator.getErrorMessage());
+				request.setAttribute("contentpage", "adduser.jsp");
+				request.setAttribute("fname", request.getParameter("fname"));
+				request.setAttribute("lname", request.getParameter("lname"));
+			}			
+			
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			
+			
+			/*PersonValidator validator = new PersonValidator(request.getParameter("fname"), 
 				request.getParameter("lname"), PersonUtils.getDateFromString(request.getParameter("date")));
 				
 				if (request.getParameter("id") != null) {
@@ -141,7 +196,7 @@ public class EditServlet extends HttpServlet {
 		
 		case "add" : 
 			
-			PersonValidator validator = new PersonValidator(request.getParameter("fname")
+			validator = new PersonValidator(request.getParameter("fname")
 					, request.getParameter("lname"), request.getParameter("date"));
 			
 			if (validator.isValid()) {
