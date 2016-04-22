@@ -2,7 +2,7 @@ package entity;
 
 import javax.persistence.*;
 
-import java.util.HashSet;
+import java.util.TreeSet;
 
 /**
  * @ author Mukonin Oleksandr
@@ -14,14 +14,25 @@ import java.util.HashSet;
 @Table(name="doctors")
 public class Doctor extends Person {
 	
+    public Doctor() {
+    	
+	}
+	
+	public Doctor(Person person) {
+		this.setId(person.getId());
+		this.setFirstName(person.getFirstName());
+		this.setLastName(person.getLastName());
+		this.setDate(person.getDate());	
+	}
+	
 	@OneToMany(mappedBy="doctor")
-    private HashSet<Patient> patients;
+    private TreeSet<Patient> patients;
 
-    public HashSet<Patient> getPatients() {
+    public TreeSet<Patient> getPatients() {
         return patients;
     }
 
-    public void setPatients(HashSet<Patient> patients) {
+    public void setPatients(TreeSet<Patient> patients) {
         this.patients = patients;
     }
     

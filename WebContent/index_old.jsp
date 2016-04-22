@@ -26,7 +26,7 @@
 	</form>
 	<br>
 	
-	<jsp:include page="users.jsp" />
+	
 
 ${message }
  

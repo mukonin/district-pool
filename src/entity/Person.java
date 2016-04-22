@@ -14,7 +14,11 @@ import javax.persistence.*;
 @Table(name="hospital")
 public class Person implements Comparable<Person> {
 	
-    private String firstName;
+    public Person() {
+    	
+	}
+
+	private String firstName;
     private String lastName;
     private DateTime date;
     private long id;

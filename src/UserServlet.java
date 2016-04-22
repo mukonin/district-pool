@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entity.Doctor;
+import entity.Patient;
 import entity.Person;
 
 /**
@@ -29,8 +31,8 @@ public class UserServlet extends HttpServlet {
 		
 		switch (persistence.PersonService.getRoleById(id)) {
 		case "patient" :
-			Person person = persistence.PersonService.getPersonById(id);
-			request.setAttribute("user", person);
+			Patient patient = persistence.PersonService.getPatientById(id);
+			request.setAttribute("user", patient);
 			request.setAttribute("contentpage", "patient.jsp");
 			break;
 		case "doctor" :

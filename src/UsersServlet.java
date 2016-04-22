@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entity.Doctor;
-import entity.Person;
+import entity.Patient;
 
 /**
  * @ author Mukonin Oleksandr
@@ -28,7 +26,7 @@ public class UsersServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
-		ArrayList<Person> personList = new ArrayList<>();
+		ArrayList<Patient> personList = new ArrayList<>();
 		ArrayList<Doctor> doctorList = new ArrayList<>();
 		
 		switch (action) {

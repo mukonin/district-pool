@@ -39,11 +39,11 @@
 						<c:if test="${role == 'patient' }">
 				    		<c:forEach var="user1" items="${list}">
 								<tr>
-									<td>${user1.person.firstName} ${user1.person.lastName}</td>
+									<td>${user1.firstName} ${user1.lastName}</td>
 									<td class="text-center col-md-1">
 										<form action="/hospital/EditServlet" method="post">
 											<button type="submit" value="link" name="action" class="btn btn-danger btn-sm">Select</button>
-											<input type = "hidden" name = "id1" value = "${user1.person.id}"/>
+											<input type = "hidden" name = "id1" value = "${user1.id}"/>
 											<input type = "hidden" name = "id2" value = "${user.id}"/>
 										</form>
 									</td>							

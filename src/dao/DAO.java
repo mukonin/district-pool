@@ -14,6 +14,7 @@ import java.util.Random;
 /**
  * @ author Mukonin Oleksandr
  */
+@Deprecated
 public class DAO {
 
     private static String conStr = "jdbc:mysql://91.209.24.68:43306/hospital?useSSL=false";

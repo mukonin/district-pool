@@ -9,15 +9,15 @@
 			</div>			
 			<div class="panel-body">
 				<c:if test="${not empty user.doctor}">
-					<a href = "http://localhost:8080/hospital/UserServlet?id=${user.doctor.person.id}">Doctor: ${user.doctor.person.firstName} ${user.doctor.person.lastName}</a>
+					<a href = "http://localhost:8080/hospital/UserServlet?id=${user.doctor.id}">Doctor: ${user.doctor.firstName} ${user.doctor.lastName}</a>
 					<br>
 					<br>
 					<form action="/hospital/EditServlet" method="post">
 						<button type="submit" value="unlink" name="action" class="btn btn-md btn-danger" data-toggle="tooltip" title="Remove doctor">
   							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</button>
-						<input type = "hidden" name = "id" value = "${user.id}"/>
-						<input type = "hidden" name = "id2" value = "${doctor.person.id}"/>						
+						<input type = "hidden" name = "id" value = "${doctor.id}"/>
+						<input type = "hidden" name = "id2" value = "${user.id}"/>						
 						<button type="submit" value="linkpage" name="action" class="btn btn-md btn-warning" data-toggle="tooltip" title="Link to doctor">
   							<span class="glyphicon glyphicon-link" aria-hidden="true"></span>
 						</button>
