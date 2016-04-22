@@ -26,7 +26,7 @@
 						<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${user.id}'">${user.lastName}, ${user.firstName}</td>
 						<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${user.id}'"><joda:format pattern="dd.MM.yyyy" value="${user.date}"/></td>
 						<c:if test="${not empty user.doctor}">
-							<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${user.doctor.id}'">${user.doctor}</td>
+							<td onclick="location.href='http://localhost:8080/hospital/UserServlet?id=${user.doctor.person.id}'">${user.doctor}</td>
 						</c:if>
 						<c:if test="${empty user.doctor}">
 							<td>

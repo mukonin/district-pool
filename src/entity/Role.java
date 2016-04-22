@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.Set;
+@Deprecated
 public class Role {
 	
 	private int id;

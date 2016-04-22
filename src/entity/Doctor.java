@@ -3,7 +3,6 @@ package entity;
 import javax.persistence.*;
 
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @ author Mukonin Oleksandr
@@ -11,41 +10,19 @@ import java.util.Set;
  */
 
 @Entity
+@DiscriminatorValue("d")
 @Table(name="doctors")
-public class Doctor implements Comparable<Doctor> {
+public class Doctor extends Person {
+	
+	@OneToMany(mappedBy="doctor")
+    private HashSet<Patient> patients;
 
-    private Person person;
-    private HashSet<Person> patients = new HashSet<Person>();
-
-    @OneToOne
-    @Id
-    @JoinColumn(name="doctor_id")
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    @ManyToOne(targetEntity=Person.class)
-    @JoinColumn(name="patient_id")
-    public HashSet<Person> getPatients() {
+    public HashSet<Patient> getPatients() {
         return patients;
     }
 
-    public void setPatients(HashSet<Person> patients) {
+    public void setPatients(HashSet<Patient> patients) {
         this.patients = patients;
     }
-
-    @Override
-    public int compareTo(Doctor doctor) {
-        return this.getPerson().compareTo(doctor.getPerson());
-    }
-
-	@Override
-	public String toString() {
-		return person.toString();
-	}
     
 }

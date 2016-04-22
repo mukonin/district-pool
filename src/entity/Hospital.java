@@ -7,6 +7,7 @@ import java.util.TreeSet;
 /**
  * @ author Mukonin Oleksandr
  */
+@Deprecated
 @XmlRootElement(name = "hospital")
 public class Hospital {
 

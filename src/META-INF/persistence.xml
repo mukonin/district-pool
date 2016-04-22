@@ -8,6 +8,7 @@
 	
    
       <class>entity.Person</class>
+      <class>entity.Patient</class>
       <class>entity.Doctor</class>
       <class>util.JpaDateTimeConverter</class>
       
@@ -17,7 +18,7 @@
          <property name="javax.persistence.jdbc.password" value="user1"/>
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
          <property name="eclipselink.logging.level" value="FINE"/>
-         <property name="eclipselink.ddl-generation" value="create-tables"/>
+         <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
       </properties>
       
 	</persistence-unit>

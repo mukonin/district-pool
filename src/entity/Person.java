@@ -8,26 +8,18 @@ import javax.persistence.*;
  * @ author Mukonin Oleksandr
  *
  */
-
 @Entity
-@Table(name="users")
+@Inheritance(strategy=InheritanceType.JOINED)
+@DiscriminatorColumn(name="role")
+@Table(name="hospital")
 public class Person implements Comparable<Person> {
 	
     private String firstName;
     private String lastName;
     private DateTime date;
     private long id;
-    private Doctor doctor;
 
-	public Doctor getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
-
-	@Id
+    @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     public long getId() {
         return id;

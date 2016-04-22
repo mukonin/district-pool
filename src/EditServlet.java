@@ -179,15 +179,26 @@ public class EditServlet extends HttpServlet {
 		
 		case "link" :
 			
-			person = persistence.PersonService.getPersonById(Long.parseLong(request.getParameter("id2")));
+			/*person = persistence.PersonService.getPersonById(Long.parseLong(request.getParameter("id2")));
 			person.setDoctor(null);
 			persistence.PersonService.updatePatient(person);
 			doctor = persistence.PersonService.getDoctorById(Long.parseLong(request.getParameter("id1")));
-			//doctor.getPatients().add(person);
-			//doctor.addPatient(person);
+			if (doctor.getPatients() == null) {
+				doctor.setPatients(new HashSet<Person>());
+			}
+			//doctor.getPatients().add(person);			
+			persistence.PersonService.updateDoctor(doctor);*/
 			
-			//persistence.PersonService.updateDoctor(doctor);
-			
+			person = persistence.PersonService.getPersonById(Long.parseLong(request.getParameter("id2")));
+			doctor = persistence.PersonService.getDoctorById(Long.parseLong(request.getParameter("id1")));
+			person.setDoctor(null);
+			//person.setDoctor(doctor);
+			if (doctor.getPatients() == null) {
+				doctor.setPatients(new HashSet<Person>());
+			}
+			doctor.getPatients().add(person);
+			persistence.PersonService.updatePatient(person);
+			persistence.PersonService.updateDoctor(doctor);
 			
 			//person.getDoctor().getPatients().remove(person); // ?? is these operation necessary
 			

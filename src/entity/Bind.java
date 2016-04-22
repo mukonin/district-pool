@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+@Deprecated
 public class Bind {
 	
 	private Person doctor;
