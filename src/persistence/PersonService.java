@@ -24,7 +24,7 @@ public class PersonService {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
 	    entitymanager.getTransaction().begin(); 
-	    entitymanager.merge(doctor);    
+	    entitymanager.merge(doctor);
 	    entitymanager.getTransaction().commit();
 		entitymanager.close();
 		emfactory.close();
@@ -66,6 +66,7 @@ public class PersonService {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
 	    entitymanager.getTransaction().begin();
+	    patient = entitymanager.getReference(Patient.class, patient.getId());
 	    entitymanager.remove(patient);
 	    entitymanager.getTransaction().commit();
     	entitymanager.close();    	
@@ -76,6 +77,7 @@ public class PersonService {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "hospital" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
 	    entitymanager.getTransaction().begin();
+	    doctor = entitymanager.getReference(Doctor.class, doctor.getId());
 	    entitymanager.remove(doctor);
 	    entitymanager.getTransaction().commit();
     	entitymanager.close();    	

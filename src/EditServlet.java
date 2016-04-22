@@ -70,17 +70,19 @@ public class EditServlet extends HttpServlet {
 			id = Long.parseLong(request.getParameter("id"));
 			
 			switch (persistence.PersonService.getRoleById(id)) {
-			case "p" :				
+			case "patient" :				
 				patient = persistence.PersonService.getPatientById(id);
-				patient.getDoctor().getPatients().remove(patient);
-				persistence.PersonService.updateDoctor(patient.getDoctor());
-				patient.setDoctor(null);				
+				if (patient.getDoctor() != null) {
+					patient.getDoctor().getPatients().remove(patient);
+					persistence.PersonService.updateDoctor(patient.getDoctor());
+				}
+				patient.setDoctor(null);
 				persistence.PersonService.updatePatient(patient);
 				persistence.PersonService.deletePatient(patient);
 				request.setAttribute("message", "Patient " + patient + " deleted");	
 				request.getRequestDispatcher("UsersServlet?action=patients").forward(request, response);
 				break;
-			case "d" : 				
+			case "doctor" : 				
 				doctor = persistence.PersonService.getDoctorById(id);
 				for (Patient p : doctor.getPatients()) {
 					p.setDoctor(null);
